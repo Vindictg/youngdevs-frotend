@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import axios from 'axios';
 
 import firebaseConfig from "./FirebaseConfig";
 
@@ -16,7 +17,19 @@ function App() {
 
   onAuthStateChanged(auth, (user) => {
     setUser(user);
+    if (user) {
+      postUserID(user.uid);
+    }
   });
+
+  const postUserID = userID => {
+    const body = { id: userID };
+    const postUserURL = 'https://youngdevs-api.herokuapp.com/api/user';
+
+    axios.post(postUserURL, body, { headers: {"Access-Control-Allow-Origin": "*"} })
+        .then(response => console.log(response))
+        .catch(error => console.error(error));
+  }
 
   const googleLogin = () => {
     signInWithRedirect(auth, provider);
