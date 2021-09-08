@@ -21,10 +21,9 @@ function App() {
     setUser(userAuthenticated);
     if (userAuthenticated) {
       try {
-        const userProviderResult = await UserProvider.postUserID(userAuthenticated.uid);
-        console.log(userProviderResult);
+        await UserProvider.postUserID(userAuthenticated.uid);
       } catch (error) {
-        console.error(error);
+        console.error({ error });
       }
     }
   });
