@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import {
   getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged,
@@ -16,17 +16,26 @@ const auth = getAuth();
 
 function App() {
   const [user, setUser] = useState(auth.currentUser);
+  const [userID, setUserID] = useState(null);
 
   onAuthStateChanged(auth, async (userAuthenticated) => {
     setUser(userAuthenticated);
-    if (userAuthenticated) {
+  });
+
+  const postUserAuthenticated = async () => {
+    if (user) {
       try {
-        await UserProvider.postUserID(userAuthenticated.uid);
+        const userProviderResponse = await UserProvider.postUserID(user.uid);
+        setUserID(userProviderResponse.id);
       } catch (error) {
         console.error({ error });
       }
     }
-  });
+  };
+
+  useEffect(() => {
+    postUserAuthenticated();
+  }, [user]);
 
   const googleLogin = () => {
     signInWithRedirect(auth, provider);
@@ -44,6 +53,7 @@ function App() {
             ? (
               <>
                 <div>{ user.email }</div>
+                <div>{ userID }</div>
                 <button type="button" className="App-link" onClick={logout}>Logout</button>
               </>
             )
