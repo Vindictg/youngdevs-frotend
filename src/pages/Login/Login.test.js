@@ -3,8 +3,16 @@ import { render, screen } from '@testing-library/react';
 
 import Login from './Login';
 
-test('renders learn react link', () => {
-  render(<Login />);
-  const linkElement = screen.getByText(/Google login/i);
-  expect(linkElement).toBeInTheDocument();
+describe('Login page tests', () => {
+  test('when login page is rendered it should show login button', () => {
+    // given
+    const loginPage = <Login />;
+
+    // when
+    render(loginPage);
+    const linkElement = screen.getByText(/Google login/i);
+
+    // then
+    expect(linkElement).toBeInTheDocument();
+  });
 });

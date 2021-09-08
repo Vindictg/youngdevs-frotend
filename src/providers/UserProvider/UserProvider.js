@@ -4,10 +4,11 @@ import config from '../../config/env';
 
 const postUserID = async (userID) => {
   const body = { id: userID };
-  const postUserURL = `${config.apiURL}/user?id=${userID}`;
+  const postUserURL = `${config.apiURL}/user`;
 
   try {
-    return await axios.post(postUserURL, JSON.stringify(body));
+    const result = await axios.post(postUserURL, JSON.stringify(body));
+    return result.data;
   } catch (error) {
     return error;
   }

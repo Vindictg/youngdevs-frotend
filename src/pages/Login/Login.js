@@ -17,12 +17,12 @@ const auth = getAuth();
 function App() {
   const [user, setUser] = useState(auth.currentUser);
 
-  onAuthStateChanged(auth, (userAuthenticated) => {
+  onAuthStateChanged(auth, async (userAuthenticated) => {
     setUser(userAuthenticated);
     if (userAuthenticated) {
       try {
-        const userProviderResult = UserProvider.postUserID(userAuthenticated.uid);
-        console.debug(userProviderResult);
+        const userProviderResult = await UserProvider.postUserID(userAuthenticated.uid);
+        console.log(userProviderResult);
       } catch (error) {
         console.error(error);
       }
@@ -45,23 +45,11 @@ function App() {
             ? (
               <>
                 <div>{ user.email }</div>
-                <button
-                  type="button"
-                  className="App-link"
-                  onClick={logout}
-                >
-                  Logout
-                </button>
+                <button type="button" className="App-link" onClick={logout}>Logout</button>
               </>
             )
             : (
-              <button
-                type="button"
-                className="App-link"
-                onClick={googleLogin}
-              >
-                Google Login
-              </button>
+              <button type="button" className="App-link" onClick={googleLogin}>Google Login</button>
             )
         }
       </header>
