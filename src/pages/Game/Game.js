@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-const possibleMovements = {
-  UP: 0,
-  DOWN: 1,
-  RIGHT: 2,
-  LEFT: 3,
-};
-
-const possibleCells = {
-  EMPTY: 0,
-  PLAYER: 1,
-};
+import GameHandler from '../../handlers/GameHandler';
+import { movements as possibleMovements } from '../../handlers/GameHandler/entities';
 
 const cellInformation = {
-  0: {
-    className: 'Board-cell-empty',
-  },
-  1: {
-    className: 'Board-cell-player',
-  },
+  0: { className: 'Board-cell-empty' },
+  1: { className: 'Board-cell-player' },
 };
 
 const movementDelay = 1000;
@@ -31,7 +18,7 @@ function Game() {
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
   ]);
-  const [currentPlayerPosition, setCurrentPlayerPosition] = useState({ i: 0, j: 0 });
+  const [playerPosition, setPlayerPosition] = useState({ i: 0, j: 0 });
   const [nextMovement, setNextMovement] = useState(0);
 
   const movementsMocked = [
@@ -46,32 +33,14 @@ function Game() {
   ];
 
   const doMovement = (movement) => {
-    const newBoard = [...board];
+    const GameInfoUpdated = GameHandler.doMovement(board, movement, playerPosition);
 
-    console.log({ movement });
-
-    switch (movement) {
-      case possibleMovements.RIGHT:
-        newBoard[currentPlayerPosition.i][currentPlayerPosition.j] = possibleCells.EMPTY;
-        newBoard[currentPlayerPosition.i + 1][currentPlayerPosition.j] = possibleCells.PLAYER;
-        setCurrentPlayerPosition({ i: currentPlayerPosition.i + 1, j: currentPlayerPosition.j });
-        break;
-      case possibleMovements.DOWN:
-        newBoard[currentPlayerPosition.i][currentPlayerPosition.j] = possibleCells.EMPTY;
-        newBoard[currentPlayerPosition.i][currentPlayerPosition.j + 1] = possibleCells.PLAYER;
-        setCurrentPlayerPosition({ i: currentPlayerPosition.i, j: currentPlayerPosition.j + 1 });
-        break;
-      default:
-        break;
-    }
-
-    console.log(newBoard);
-    setBoard([...newBoard]);
+    setPlayerPosition(GameInfoUpdated.playerPosition);
+    setBoard([...GameInfoUpdated.board]);
   };
 
   useEffect(() => {
     if (nextMovement !== movementsMocked.length) {
-      console.log({ nextMovement });
       setTimeout(() => {
         setNextMovement(nextMovement + 1);
         doMovement(movementsMocked[nextMovement]);
