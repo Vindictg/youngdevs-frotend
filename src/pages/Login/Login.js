@@ -26,7 +26,7 @@ function Login() {
         const userProviderResponse = await UserProvider.postUserID(user.uid);
         setUserID(userProviderResponse.id);
       } catch (error) {
-        console.error({ error });
+        // TODO: handle error
       }
     }
   };

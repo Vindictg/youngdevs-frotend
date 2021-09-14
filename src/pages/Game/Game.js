@@ -3,23 +3,13 @@ import React, { useState, useEffect } from 'react';
 import GameHandler from '../../handlers/GameHandler';
 import { movements as possibleMovements } from '../../handlers/GameHandler/entities';
 
-const cellInformation = {
-  0: { className: 'Board-cell-empty' },
-  1: { className: 'Board-cell-player' },
-};
-
-const movementDelay = 1000;
+const movementDelay = 700;
 
 function Game() {
-  const [board, setBoard] = useState([
-    [1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-  ]);
-  const [playerPosition, setPlayerPosition] = useState({ i: 0, j: 0 });
-  const [nextMovement, setNextMovement] = useState(0);
+  const cellInformation = {
+    0: { className: 'Board-cell-empty' },
+    1: { className: 'Board-cell-player' },
+  };
 
   const movementsMocked = [
     possibleMovements.RIGHT,
@@ -32,6 +22,32 @@ function Game() {
     possibleMovements.DOWN,
   ];
 
+  const initialBoard = [
+    [1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+  ];
+
+  const initialPlayerPosition = { i: 0, j: 0 };
+
+  const [running, setRunning] = useState(false);
+  const [board, setBoard] = useState(initialBoard);
+  const [playerPosition, setPlayerPosition] = useState(initialPlayerPosition);
+  const [nextMovement, setNextMovement] = useState(0);
+
+  const runOrPauseExecution = () => {
+    setRunning(!running);
+  };
+
+  const refreshGame = () => {
+    setRunning(false);
+    setBoard(initialBoard);
+    setPlayerPosition(initialPlayerPosition);
+    setNextMovement(0);
+  };
+
   const doMovement = (movement) => {
     const GameInfoUpdated = GameHandler.doMovement(board, movement, playerPosition);
 
@@ -40,13 +56,13 @@ function Game() {
   };
 
   useEffect(() => {
-    if (nextMovement !== movementsMocked.length) {
+    if (nextMovement !== movementsMocked.length && running) {
       setTimeout(() => {
-        setNextMovement(nextMovement + 1);
         doMovement(movementsMocked[nextMovement]);
+        setNextMovement(nextMovement + 1);
       }, movementDelay);
     }
-  }, [board]);
+  }, [running, nextMovement]);
 
   const generateGameBoard = () => {
     let generatedGameBoard = [];
@@ -69,6 +85,8 @@ function Game() {
         <div className="Board">
           {generateGameBoard()}
         </div>
+        <button type="button" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</button>
+        <button type="button" onClick={refreshGame}>REFRESH</button>
       </header>
     </div>
   );
