@@ -7,14 +7,12 @@ import {
 import firebaseConfig from '../../config/FirebaseConfig';
 import UserProvider from '../../providers/UserProvider';
 
-import './Login.scss';
-
 initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
-function App() {
+function Login() {
   const [user, setUser] = useState(auth.currentUser);
   const [userID, setUserID] = useState(null);
 
@@ -66,4 +64,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;

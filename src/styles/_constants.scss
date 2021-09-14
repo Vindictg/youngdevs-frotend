@@ -1,0 +1,8 @@
+// colors
+$cell-white: #FFFFFF;
+$cell-green: green;
+
+// sizes
+$cell-size: 2.5rem;
+$cell-margin: 0.1rem;
+$board-size: (($cell-size + ($cell-margin * 2))  * 5); // Board 5x5
