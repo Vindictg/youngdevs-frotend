@@ -49,10 +49,10 @@ function Game() {
   };
 
   const doMovement = (movement) => {
-    const GameInfoUpdated = GameHandler.doMovement(board, movement, playerPosition);
+    const GameStateUpdated = GameHandler.doMovement(board, movement, playerPosition);
 
-    setPlayerPosition(GameInfoUpdated.playerPosition);
-    setBoard([...GameInfoUpdated.board]);
+    setPlayerPosition(GameStateUpdated.playerPosition);
+    setBoard([...GameStateUpdated.board]);
   };
 
   useEffect(() => {
