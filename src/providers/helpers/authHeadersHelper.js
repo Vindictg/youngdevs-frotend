@@ -9,9 +9,8 @@ const getAuthHeaders = async () => {
   if (currentUser) {
     authToken = await currentUser.getIdToken();
   }
-
   return {
-    Authorization: `token ${authToken}`,
+    Authorization: `Bearer ${authToken}`,
   };
 };
 
