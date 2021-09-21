@@ -4,7 +4,7 @@ import {
   getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged,
 } from 'firebase/auth';
 
-import firebaseConfig from '../../config/firebaseConfig';
+import firebaseConfig from '../../config/FirebaseConfig';
 import UserProvider from '../../providers/UserProvider';
 
 initializeApp(firebaseConfig);
