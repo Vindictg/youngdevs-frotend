@@ -48,7 +48,7 @@ describe('GameHandler tests', () => {
     expect(result.playerPosition).toEqual(expectedPlayerPosition);
   });
 
-  test('when movement is a invalid number then doMovement should returns an error' , async () => {
+  test('when movement is a invalid number then doMovement should returns an error', async () => {
     // given
     const movement = 999;
     const expectedError = 'movement not allowed';
