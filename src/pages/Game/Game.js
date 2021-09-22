@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 
 import Board from '../../components/Board';
+import CommandSelector from '../../components/CommandSelector';
 import { reducer, getInitialGameContext, actions } from '../../reducers/GameReducer/GameReducer';
 import GameContext from '../../context/GameContext';
 
@@ -20,9 +21,14 @@ function Game() {
     <GameContext.Provider value={{ state, dispatch }}>
       <div className="App">
         <header className="App-header">
-          <Board />
-          <button type="button" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</button>
-          <button type="button" onClick={resetGame}>RESET</button>
+          <div className="Game-container">
+            <div className="Game-container-board">
+              <Board />
+              <button type="button" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</button>
+              <button type="button" onClick={resetGame}>RESET</button>
+            </div>
+            <CommandSelector />
+          </div>
         </header>
       </div>
     </GameContext.Provider>

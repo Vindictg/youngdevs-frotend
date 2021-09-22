@@ -1,10 +1,10 @@
 import GameHandler from './GameHandler';
-import { movements } from './entities';
+import { commands } from './entities';
 
 describe('GameHandler tests', () => {
   test('when movement is DOWN then player should move one row below', async () => {
     // given
-    const movement = movements.DOWN;
+    const movement = commands.DOWN;
     const initialBoard = [
       [1, 0],
       [0, 0],
@@ -27,7 +27,7 @@ describe('GameHandler tests', () => {
 
   test('when movement is RIGHT then player should move one column to the right', async () => {
     // given
-    const movement = movements.RIGHT;
+    const movement = commands.RIGHT;
     const initialBoard = [
       [1, 0],
       [0, 0],

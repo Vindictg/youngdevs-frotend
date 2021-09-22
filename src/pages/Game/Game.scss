@@ -1,26 +1,16 @@
 @import '../../styles/constants';
 
-.Board {
-  width: $board-size;
-  height: $board-size;
-  display: inline-block;
-  font-size: 0rem;
+.Game {
+  &-container {
+    padding: 1rem;
+    background-color: $background-gray;
+    display: flex;
+  }
 
-  &-cell {
-    width: $cell-size;
-    height: $cell-size;
-    margin: $cell-margin;
-
-    &-empty {
-      @extend .Board-cell;
-      background-color: $cell-white;
-      display: inline-block;
-    }
-
-    &-player {
-      @extend .Board-cell;
-      background-color: $cell-green;
-      display: inline-block;
-    }
+  &-container-board {
+    padding: 1rem;
+    background-color: $background-gray;
+    display: flex;
+    flex-direction: column;
   }
 }

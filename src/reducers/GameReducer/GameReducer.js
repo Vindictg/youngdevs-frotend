@@ -1,16 +1,3 @@
-import { movements as possibleMovements } from '../../handlers/GameHandler/entities';
-
-const commandList = [
-  possibleMovements.RIGHT,
-  possibleMovements.DOWN,
-  possibleMovements.RIGHT,
-  possibleMovements.DOWN,
-  possibleMovements.RIGHT,
-  possibleMovements.DOWN,
-  possibleMovements.RIGHT,
-  possibleMovements.DOWN,
-];
-
 const initialBoard = [
   [1, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
@@ -29,7 +16,7 @@ export const getInitialGameContext = () => {
     board: boardCopy,
     playerPosition: initialPlayerPosition,
     nextMovement: 0,
-    commandList,
+    commandList: [],
   });
 };
 
@@ -39,6 +26,8 @@ export const actions = {
   SWITCH_RUNNING: 'switch_running',
   NEXT_COMMAND: 'next_command',
   UPDATE_PLAYER_POSITION: 'update_player_position',
+  ADD_COMMAND: 'add_command',
+  REMOVE_COMMAND: 'remove_command',
 };
 
 export function reducer(state, action) {
@@ -55,6 +44,13 @@ export function reducer(state, action) {
       return { ...state, nextMovement: (state.nextMovement + 1) };
     case actions.UPDATE_PLAYER_POSITION:
       return { ...state, playerPosition: payload.playerPosition };
+    case actions.ADD_COMMAND:
+      return { ...state, commandList: [...state.commandList, payload.command] };
+    case actions.REMOVE_COMMAND:
+      return {
+        ...state,
+        commandList: state.commandList.filter((_value, key) => payload.commandID !== key),
+      };
     default:
       throw new Error('action is not defined');
   }

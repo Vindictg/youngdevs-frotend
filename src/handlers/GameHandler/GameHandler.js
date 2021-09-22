@@ -1,35 +1,34 @@
-import { cells, movements } from './entities';
+import { cells, commands } from './entities';
 
-const moveToDown = (board, playerPosition) => {
-  const newBoard = [...board];
-
-  newBoard[playerPosition.i][playerPosition.j] = cells.EMPTY;
-  newBoard[playerPosition.i + 1][playerPosition.j] = cells.PLAYER;
-
-  return {
-    board: newBoard,
-    playerPosition: { i: playerPosition.i + 1, j: playerPosition.j },
-  };
+const moveOperation = {
+  UP: { i: -1, j: 0 },
+  DOWN: { i: 1, j: 0 },
+  RIGHT: { i: 0, j: 1 },
+  LEFT: { i: 0, j: -1 },
 };
 
-const moveToRight = (board, playerPosition) => {
+const moveTo = (board, playerPosition, operation) => {
   const newBoard = [...board];
 
   newBoard[playerPosition.i][playerPosition.j] = cells.EMPTY;
-  newBoard[playerPosition.i][playerPosition.j + 1] = cells.PLAYER;
+  newBoard[playerPosition.i + operation.i][playerPosition.j + operation.j] = cells.PLAYER;
 
   return {
     board: newBoard,
-    playerPosition: { i: playerPosition.i, j: playerPosition.j + 1 },
+    playerPosition: { i: playerPosition.i + operation.i, j: playerPosition.j + operation.j },
   };
 };
 
 const doMovement = (board, movement, playerPosition) => {
   switch (movement) {
-    case movements.RIGHT:
-      return moveToRight(board, playerPosition);
-    case movements.DOWN:
-      return moveToDown(board, playerPosition);
+    case commands.UP.id:
+      return moveTo(board, playerPosition, moveOperation.UP);
+    case commands.DOWN.id:
+      return moveTo(board, playerPosition, moveOperation.DOWN);
+    case commands.RIGHT.id:
+      return moveTo(board, playerPosition, moveOperation.RIGHT);
+    case commands.LEFT.id:
+      return moveTo(board, playerPosition, moveOperation.LEFT);
     default:
       throw new Error('movement not allowed');
   }

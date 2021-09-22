@@ -4,7 +4,7 @@ import GameHandler from '../../handlers/GameHandler';
 import GameContext from '../../context/GameContext';
 import { actions } from '../../reducers/GameReducer/GameReducer';
 
-const movementDelay = 700;
+const movementDelay = 500;
 
 function Board() {
   const { state, dispatch } = useContext(GameContext);
