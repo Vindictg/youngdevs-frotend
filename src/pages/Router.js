@@ -7,7 +7,7 @@ import Login from './Login';
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/" component={Login} />
       <Route exact path="/game" component={Game} />
     </Switch>
   </BrowserRouter>

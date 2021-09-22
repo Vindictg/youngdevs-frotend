@@ -1,0 +1,23 @@
+.Nav{
+    &-content{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+    &-header{
+        border-bottom-style: solid;
+        border-width: thin;
+    }
+
+    &-link{
+       border-style: none;
+       font-weight: 800;
+       background-color: white;
+       font-size: large;
+    }
+
+}
+
