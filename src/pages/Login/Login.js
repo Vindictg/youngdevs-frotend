@@ -44,7 +44,8 @@ function Login() {
       <div className="App-header">
         <div className="Login-content">
           <h1>YoungDevs</h1>
-          <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry </h3>
+          <h3>Learning to code has never been so easy, join thousands of students learn,</h3>
+          <h3>compare and have fun with others.</h3>
           <button type="button" className="Login-link" onClick={googleLogin}>Google Login</button>
         </div>
       </div>

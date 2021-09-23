@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import {
   getAuth,
 } from 'firebase/auth';
@@ -9,10 +10,9 @@ initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
-const Nav = (props, userName) => {
+const Nav = (props) => {
   const logout = () => {
     auth.signOut();
-
     // eslint-disable-next-line react/prop-types
     props.props.history.push('/');
   };
@@ -23,7 +23,7 @@ const Nav = (props, userName) => {
         <div className="Nav-content">
           <h3>YoungDevs</h3>
           <div className="Nav-content">
-            <h5>{userName}</h5>
+            <h4>{auth.currentUser?.displayName ? auth.currentUser.displayName : <Redirect to="/" />}</h4>
             <button type="button" className="Nav-link" onClick={logout}>Logout</button>
           </div>
         </div>
