@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
-import GameContext from '../../context/GameContext';
-import { commands } from '../../handlers/GameHandler/entities';
+import GameContext from '../../../context/GameContext';
+import { commands } from '../../../handlers/GameHandler/entities';
 import { actions } from '../../reducers/GameReducer/GameReducer';
 
 function CommandSelector() {

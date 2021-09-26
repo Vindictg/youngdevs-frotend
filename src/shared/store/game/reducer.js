@@ -1,3 +1,5 @@
+import actions from './actions';
+
 const initialBoard = [
   [1, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
@@ -20,17 +22,7 @@ export const getInitialGameContext = () => {
   });
 };
 
-export const actions = {
-  MOVE: 'move',
-  RESET: 'reset',
-  SWITCH_RUNNING: 'switch_running',
-  NEXT_COMMAND: 'next_command',
-  UPDATE_PLAYER_POSITION: 'update_player_position',
-  ADD_COMMAND: 'add_command',
-  REMOVE_COMMAND: 'remove_command',
-};
-
-export function reducer(state, action) {
+export const reducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -54,4 +46,4 @@ export function reducer(state, action) {
     default:
       throw new Error('action is not defined');
   }
-}
+};

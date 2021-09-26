@@ -4,7 +4,7 @@ import {
   getAuth,
 } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import firebaseConfig from '../../config/FirebaseConfig';
+import firebaseConfig from '../../../config/FirebaseConfig';
 
 initializeApp(firebaseConfig);
 

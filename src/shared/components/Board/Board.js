@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 
-import GameHandler from '../../handlers/GameHandler';
-import GameContext from '../../context/GameContext';
+import GameHandler from '../../../handlers/GameHandler';
+import GameContext from '../../../context/GameContext';
 import { actions } from '../../reducers/GameReducer/GameReducer';
 
 const movementDelay = 500;

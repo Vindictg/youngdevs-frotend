@@ -1,5 +1,5 @@
 import axios from 'axios';
-import authHeaderProvider from '../helpers/authHeadersHelper';
+import authHeaderProvider from '../../shared/auth/authHeadersHelper';
 
 import config from '../../config/env';
 

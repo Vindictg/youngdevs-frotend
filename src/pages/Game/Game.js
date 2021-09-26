@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
-import Nav from '../Nav';
-import Board from '../../components/Board';
-import CommandSelector from '../../components/CommandSelector';
-import { reducer, getInitialGameContext, actions } from '../../reducers/GameReducer/GameReducer';
+import Nav from '../../shared/components/Nav';
+import Board from '../../shared/components/Board';
+import CommandSelector from '../../shared/components/CommandSelector';
+import { reducer, getInitialGameContext, actions } from '../../shared/reducers/GameReducer/GameReducer';
 import GameContext from '../../context/GameContext';
 
 function Game(props) {
