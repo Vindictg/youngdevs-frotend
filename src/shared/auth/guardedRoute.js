@@ -4,7 +4,6 @@ import { useAuth } from '../../context/AuthContext';
 
 const GuardedRoute = ({ component: Component, ...rest }) => {
   const { user } = useAuth();
-  console.log(`sdawd:${user}`);
   return (
     <Route
       {...rest}
