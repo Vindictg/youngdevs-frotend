@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 
 import GameContext from '../../../context/GameContext';
-import { commands } from '../../../handlers/GameHandler/entities';
-import { actions } from '../../reducers/GameReducer/GameReducer';
+import { commands } from '../../models/commands';
+import actions from '../../store/game/actions';
 
 function CommandSelector() {
   const { state, dispatch } = useContext(GameContext);

@@ -2,10 +2,11 @@ import React, { useReducer } from 'react';
 import Nav from '../../shared/components/Nav';
 import Board from '../../shared/components/Board';
 import CommandSelector from '../../shared/components/CommandSelector';
-import { reducer, getInitialGameContext, actions } from '../../shared/reducers/GameReducer/GameReducer';
+import actions from '../../shared/store/game/actions';
+import { reducer, getInitialGameContext } from '../../shared/store/game/reducer';
 import GameContext from '../../context/GameContext';
 
-function Game(props) {
+function Game() {
   const [state, dispatch] = useReducer(reducer, { ...getInitialGameContext() });
   const { running } = state;
   const runOrPauseExecution = () => {
@@ -19,7 +20,7 @@ function Game(props) {
   return (
     <GameContext.Provider value={{ state, dispatch }}>
       <div className="App">
-        <Nav props={props} />
+        <Nav />
         <header className="App-header">
           <div className="Game-container">
             <div className="Game-container-board">

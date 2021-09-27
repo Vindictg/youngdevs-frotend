@@ -1,4 +1,5 @@
-import { cells, commands } from './entities';
+import { commands } from '../../shared/models/commands';
+import { cells } from '../../shared/models/cells';
 
 const moveOperation = {
   UP: { i: -1, j: 0 },
