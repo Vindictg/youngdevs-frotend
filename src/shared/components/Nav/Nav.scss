@@ -1,3 +1,5 @@
+@import '../../../styles/constants';
+
 .Nav{
     &-content{
         display: flex;
@@ -16,7 +18,11 @@
        border-style: none;
        font-weight: 800;
        background-color: white;
-       font-size: large;
+       font-size: large;        
+       color: #282c34;
+       text-decoration: none;
+       padding: 16px 56px;
+       cursor:pointer;
     }
 
 }

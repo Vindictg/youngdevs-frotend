@@ -3,17 +3,17 @@ import { Route, Redirect } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const GuardedRoute = ({ component: Component, ...rest }) => {
-  const { isAuthenticaded } = useAuth();
-  console.log(isAuthenticaded);
+  const { user } = useAuth();
+  console.log(`sdawd:${user}`);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isAuthenticaded) {
+        if (user.isAuthenticated) {
           return <Component {...props} />;
         }
         return (
-          <Redirect to="/" props={props} />
+          <Redirect to="/login" props={props} />
         );
       }}
     />

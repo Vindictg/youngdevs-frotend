@@ -1,6 +1,6 @@
-const actions = {
+export const actions = {
   loadUserProfile: 'loadUserProfile',
-  logOut: 'logOut',
+  init: 'init',
 };
 
 export default actions;

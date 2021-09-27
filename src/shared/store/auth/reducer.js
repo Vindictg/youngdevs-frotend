@@ -1,19 +1,24 @@
-import actions from './actions';
+import { actions } from './actions';
 
-const initialState = {
+export const getInitialState = () => ({
   isAuthenticated: false,
   name: '',
   email: '',
   tokenId: '',
-};
+});
 
 export const reducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
     case actions.loadUserProfile:
-      return { ...state, payload };
+      return {
+        isAuthenticated: payload.isAuthenticated,
+        name: payload.name,
+        email: payload.email,
+        tokenId: payload.tokenId,
+      };
     case actions.logOut:
-      return { ...state, user: initialState };
+      return { ...state, isAuthenticated: false };
     default:
       throw new Error('action is not defined');
   }

@@ -1,13 +1,11 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 function Login() {
   const { logIn } = useAuth();
-  const history = useHistory();
-  const handleLogIn = () => {
+
+  const handleLogIn = async () => {
     logIn();
-    history.push('/game');
   };
 
   return (

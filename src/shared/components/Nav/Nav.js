@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 
 const Nav = () => {
@@ -15,7 +15,7 @@ const Nav = () => {
     <div className="App">
       <div className="Nav-header">
         <div className="Nav-content">
-          <h3>YoungDevs</h3>
+          <Link className="Nav-link" to="/">YoungDevs</Link>
           <div className="Nav-content">
             <button type="button" className="Nav-link" onClick={handleLogOut}>Logout</button>
           </div>
