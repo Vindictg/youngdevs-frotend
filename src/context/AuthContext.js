@@ -16,7 +16,7 @@ const AuthContext = React.createContext();
 export function useAuth() {
   return useContext(AuthContext);
 }
-
+// TODO: hook personalizado
 export function AuthProvider({ children }) {
   const history = useHistory();
   const [user, dispatch] = useReducer(reducer, getInitialState());
