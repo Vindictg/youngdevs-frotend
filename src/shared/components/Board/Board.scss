@@ -5,6 +5,8 @@
   height: $board-size;
   display: inline-block;
   font-size: 0rem;
+  background-color: $gray-light;
+  padding: 0.5rem;
 
   &-cell {
     width: $cell-size;

@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import { getInitialState, reducer } from '../shared/store/auth/reducer';
 import { actions } from '../shared/store/auth/actions';
-import firebaseConfig from '../config/FirebaseConfig';
+import firebaseConfig from '../config/firebase';
 
 initializeApp(firebaseConfig);
 const auth = getAuth();

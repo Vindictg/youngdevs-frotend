@@ -33,6 +33,10 @@ function Board() {
         doMovement(commandList[nextMovement]);
         dispatch({ type: actions.NEXT_COMMAND });
       }, movementDelay);
+    } else if (nextMovement === commandList.length) {
+      setTimeout(() => {
+        dispatch({ type: actions.RESET });
+      }, movementDelay * 2);
     }
   }, [running, nextMovement]);
 

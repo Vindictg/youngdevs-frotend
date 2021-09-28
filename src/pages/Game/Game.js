@@ -1,4 +1,6 @@
 import React, { useReducer } from 'react';
+import { Link } from 'react-router-dom';
+
 import Nav from '../../shared/components/Nav';
 import Board from '../../shared/components/Board';
 import CommandSelector from '../../shared/components/CommandSelector';
@@ -9,26 +11,25 @@ import GameContext from '../../context/GameContext';
 function Game() {
   const [state, dispatch] = useReducer(reducer, { ...getInitialGameContext() });
   const { running } = state;
+
   const runOrPauseExecution = () => {
     dispatch({ type: actions.SWITCH_RUNNING });
-  };
-
-  const resetGame = () => {
-    dispatch({ type: actions.RESET });
   };
 
   return (
     <GameContext.Provider value={{ state, dispatch }}>
       <div className="App">
         <Nav />
-        <header className="App-header">
+        <header className="App-container">
           <div className="Game-container">
-            <div className="Game-container-board">
+            <div className="Game-container-content">
               <Board />
-              <button type="button" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</button>
-              <button type="button" onClick={resetGame}>RESET</button>
+              <CommandSelector />
             </div>
-            <CommandSelector />
+            <div className="Game-container-footer">
+              <Link className="Game-button" to="/">BACK TO MENU</Link>
+              <button className="Game-button" type="button" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</button>
+            </div>
           </div>
         </header>
       </div>

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import Nav from '../../shared/components/Nav';
 
 function Home() {
   return (
     <div className="App">
       <Nav />
-      <div className="App-header">
+      <div className="App-container">
         <div className="Home-content">
           <h3>SCORE:99999</h3>
           <h3>CURRENT LEVEL:2</h3>
