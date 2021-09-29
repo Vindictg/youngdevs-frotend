@@ -5,7 +5,7 @@ const messageTypes = {
   WARNING: 'warning',
 };
 
-export const getInitialConsoleContext = () => ({ messages: [{ text: 'prueba', type: messageTypes.INFO }] });
+export const getInitialConsoleContext = () => ({ messages: [] });
 
 export const reducer = (state, action) => {
   const { type, payload } = action;
