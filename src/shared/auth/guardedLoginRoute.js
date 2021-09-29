@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
-const GuardedRoute = ({ component: Component, ...rest }) => {
+const GuardedLoginRoute = ({ component: Component, ...rest }) => {
   const { user } = useAuth();
 
   return (
@@ -10,14 +10,14 @@ const GuardedRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => {
         if (user.isAuthenticated) {
-          return <Component {...props} />;
+          return <Redirect to="/" props={props} />;
         }
         return (
-          <Redirect to="/login" props={props} />
+          <Component {...props} />
         );
       }}
     />
   );
 };
 
-export default GuardedRoute;
+export default GuardedLoginRoute;

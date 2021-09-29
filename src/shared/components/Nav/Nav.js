@@ -1,13 +1,11 @@
 import React from 'react';
 import './Nav.scss';
 import { Link, useHistory } from 'react-router-dom';
-import { useAuth } from '../../../context/AuthContext';
+import useAuth from '../../../hooks/useAuth';
 
 const Nav = () => {
-  const { logOut, isAuthenticated } = useAuth();
+  const { logOut } = useAuth();
   const history = useHistory();
-
-  if (isAuthenticated()) history.push('/');
 
   const handleLogOut = () => {
     logOut();
@@ -20,7 +18,7 @@ const Nav = () => {
         <div className="Nav-content">
           <Link className="Nav-link" to="/">YoungDevs</Link>
           <div className="Nav-content">
-            { isAuthenticated() ? <button type="button" className="Nav-link" onClick={handleLogOut}>Logout</button> : <></>}
+            <button type="button" className="Nav-link" onClick={handleLogOut}>Logout</button>
           </div>
         </div>
       </div>
