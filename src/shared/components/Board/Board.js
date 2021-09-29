@@ -1,16 +1,18 @@
 import React, { useContext, useEffect } from 'react';
 
-import GameHandler from '../../../handlers/GameHandler';
+import useGameHandler from '../../../hooks/useGameHandler';
 import GameContext from '../../../context/GameContext';
 import actions from '../../store/game/actions';
 
 const movementDelay = 500;
 
 function Board() {
-  const { state, dispatch } = useContext(GameContext);
+  const { gameState, gameDispatch } = useContext(GameContext);
+  const GameHandler = useGameHandler();
+
   const {
     board, playerPosition, running, nextMovement, commandList,
-  } = state;
+  } = gameState;
 
   const cellInformation = {
     0: { className: 'Board-cell-empty' },
@@ -20,22 +22,22 @@ function Board() {
   const doMovement = (movement) => {
     const GameStateUpdated = GameHandler.doMovement(board, movement, playerPosition);
 
-    dispatch({
+    gameDispatch({
       type: actions.UPDATE_PLAYER_POSITION,
       payload: { playerPosition: GameStateUpdated.playerPosition },
     });
-    dispatch({ type: actions.MOVE, payload: { board: GameStateUpdated.board } });
+    gameDispatch({ type: actions.MOVE, payload: { board: GameStateUpdated.board } });
   };
 
   useEffect(() => {
     if (nextMovement !== commandList.length && running) {
       setTimeout(() => {
         doMovement(commandList[nextMovement]);
-        dispatch({ type: actions.NEXT_COMMAND });
+        gameDispatch({ type: actions.NEXT_COMMAND });
       }, movementDelay);
     } else if (nextMovement === commandList.length) {
       setTimeout(() => {
-        dispatch({ type: actions.RESET });
+        gameDispatch({ type: actions.RESET });
       }, movementDelay * 2);
     }
   }, [running, nextMovement]);
@@ -56,8 +58,10 @@ function Board() {
   };
 
   return (
-    <div className="Board">
-      {generateGameBoard()}
+    <div className="Board-container">
+      <div className="Board">
+        {generateGameBoard()}
+      </div>
     </div>
   );
 }

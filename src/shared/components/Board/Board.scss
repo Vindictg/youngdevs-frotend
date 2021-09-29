@@ -6,7 +6,6 @@
   display: inline-block;
   font-size: 0rem;
   background-color: $gray-light;
-  padding: 0.5rem;
 
   &-cell {
     width: $cell-size;
@@ -25,4 +24,10 @@
       display: inline-block;
     }
   }
+}
+
+.Board-container {
+  background-color: $gray-light;
+  width: 100%;
+  padding: 1rem;
 }

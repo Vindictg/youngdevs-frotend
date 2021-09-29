@@ -5,15 +5,15 @@ import { commands } from '../../models/commands';
 import actions from '../../store/game/actions';
 
 function CommandSelector() {
-  const { state, dispatch } = useContext(GameContext);
-  const { commandList } = state;
+  const { gameState, gameDispatch } = useContext(GameContext);
+  const { commandList } = gameState;
 
   const addCommand = (command) => {
-    dispatch({ type: actions.ADD_COMMAND, payload: { command } });
+    gameDispatch({ type: actions.ADD_COMMAND, payload: { command } });
   };
 
   const removeCommand = (commandID) => {
-    dispatch({ type: actions.REMOVE_COMMAND, payload: { commandID } });
+    gameDispatch({ type: actions.REMOVE_COMMAND, payload: { commandID } });
   };
 
   const getSelectedCommandsList = () => commandList.map((command, key) => {
