@@ -14,7 +14,7 @@ function Home() {
             <Link className="App-link" to="/game">LEVELS</Link>
             <Link className="App-link" to="/ranking">RANKING</Link>
             <Link className="App-link" to="/premium">¡PREMIUM!</Link>
-            <Link className="App-link" to="/game">SUPPORT</Link>
+            <Link className="App-link" to="/support">SUPPORT</Link>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import emailjs from 'emailjs-com';
+import './Support.scss';
 
 export default function Support() {
   const form = useRef();
@@ -16,30 +17,31 @@ export default function Support() {
   const [email, setEmail] = useState({ value: '', valid: true });
   const [subject, setSubject] = useState({ value: '', valid: true });
 
-  function validateForm (e) {
+  function validateEmail(e) {
+    if (regularExpression.email.test(e.target.email)) {
+      email.valid = false;
+    }
+    console.log(email.valid);
+    return email.valid;
+  }
+
+  function validateSubject(e) {
+    if (regularExpression.subject.test(e.target.subject)) {
+      subject.valid = false;
+    }
+
+    return subject.valid;
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  function validateForm(e) {
     let validForm = false;
     if (validateEmail(e) && validateSubject(e)) {
       validForm = true;
     }
     console.log(validForm);
     return validForm;
-  };
-
-  function validateEmail (e) {
-    if (regularExpression.email.test(e.target.email)) {
-      email.valid = false;
-    }
-    console.log(email.valid);
-    return email.valid;
-  };
-
-  function validateSubject (e) {
-    if (regularExpression.subject.test(e.target.subject)) {
-      subject.valid = false;
-    }
-
-    return subject.valid;
-  };
+  }
 
   function sendEmail(e) {
     e.preventDefault();
@@ -50,7 +52,7 @@ export default function Support() {
       }, (error) => {
         console.log(error.text);
       });
-      e.target.reset();  
+    e.target.reset();
   }
 
   return (
