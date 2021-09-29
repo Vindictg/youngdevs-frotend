@@ -6,6 +6,7 @@ import Home from './Home';
 import Login from './Login';
 import GuardedRoute from '../shared/auth/guardedRoute';
 import { AuthProvider } from '../context/AuthContext';
+import Support from './Support';
 
 const Router = () => (
   <BrowserRouter>
@@ -14,6 +15,7 @@ const Router = () => (
         <Route exact path="/login" component={Login} />
         <GuardedRoute exact path="/game" component={Game} />
         <GuardedRoute exact path="/" component={Home} />
+        <Route exact path="/support" component={Support} />
       </Switch>
     </AuthProvider>
   </BrowserRouter>
