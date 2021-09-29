@@ -1,6 +1,7 @@
 import React from 'react';
+import './Nav.scss';
 import { Link, useHistory } from 'react-router-dom';
-import { useAuth } from '../../../context/AuthContext';
+import useAuth from '../../../hooks/useAuth';
 
 const Nav = () => {
   const { logOut } = useAuth();

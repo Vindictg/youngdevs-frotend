@@ -1,25 +1,21 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import {
   getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged,
 } from 'firebase/auth';
-import { getInitialState, reducer } from '../shared/store/auth/reducer';
-import { actions } from '../shared/store/auth/actions';
-import firebaseConfig from '../config/FirebaseConfig';
+import { getInitialState, reducer } from '../../shared/store/auth/reducer';
+import { actions } from '../../shared/store/auth/actions';
+import firebaseConfig from '../../config/firebase';
 
 initializeApp(firebaseConfig);
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
-const AuthContext = React.createContext();
-export function useAuth() {
-  return useContext(AuthContext);
-}
-// TODO: hook personalizado
-export function AuthProvider({ children }) {
+function useAuth() {
   const history = useHistory();
-  const [user, dispatch] = useReducer(reducer, getInitialState());
+  const [user, dispatch] = useReducer(reducer, getInitialState(auth.currentUser));
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (userAuthenticated) => {
@@ -30,6 +26,7 @@ export function AuthProvider({ children }) {
         tokenId: userAuthenticated?.accessToken,
       };
       dispatch({ type: actions.loadUserProfile, payload: userPayload });
+      setAuthLoading(false);
     });
   }, []);
 
@@ -53,17 +50,12 @@ export function AuthProvider({ children }) {
     dispatch({ type: actions.logOut });
   };
 
-  const value = {
+  return {
     logIn,
     logOut,
     user,
+    authLoading,
   };
-
-  return (
-    <AuthContext.Provider value={value}>
-      { children }
-    </AuthContext.Provider>
-  );
 }
 
-export default AuthProvider;
+export default useAuth;

@@ -1,10 +1,10 @@
 import { actions } from './actions';
 
-export const getInitialState = () => ({
-  isAuthenticated: false,
-  name: '',
-  email: '',
-  tokenId: '',
+export const getInitialState = (userAuthenticated) => ({
+  isAuthenticated: !!userAuthenticated,
+  name: userAuthenticated?.displayName,
+  email: userAuthenticated?.email,
+  tokenId: userAuthenticated?.accessToken,
 });
 
 export const reducer = (state, action) => {

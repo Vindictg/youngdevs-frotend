@@ -2,15 +2,35 @@
 
 .Game {
   &-container {
-    padding: 1rem;
-    background-color: $background-gray;
-    display: flex;
-  }
-
-  &-container-board {
-    padding: 1rem;
-    background-color: $background-gray;
     display: flex;
     flex-direction: column;
+  }
+
+  &-container-content {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &-container-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
+  &-button{
+    color: #282c34;
+    background-color: #fff;
+    border-style: solid;
+    border-width: 1px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    max-height: 1.5rem;
+    min-width: 5rem;
+    justify-content: center;
   }
 }

@@ -1,38 +1,50 @@
 import React, { useReducer } from 'react';
-import Nav from '../../shared/components/Nav';
+import './Game.scss';
+import { Link } from 'react-router-dom';
+
 import Board from '../../shared/components/Board';
+import Console from '../../shared/components/Console';
 import CommandSelector from '../../shared/components/CommandSelector';
-import actions from '../../shared/store/game/actions';
-import { reducer, getInitialGameContext } from '../../shared/store/game/reducer';
+
+import gameActions from '../../shared/store/game/actions';
+import { reducer as gameReducer, getInitialGameContext } from '../../shared/store/game/reducer';
 import GameContext from '../../context/GameContext';
 
-function Game() {
-  const [state, dispatch] = useReducer(reducer, { ...getInitialGameContext() });
-  const { running } = state;
-  const runOrPauseExecution = () => {
-    dispatch({ type: actions.SWITCH_RUNNING });
-  };
+import { reducer as consoleReducer, getInitialConsoleContext } from '../../shared/store/console/reducer';
+import ConsoleContext from '../../context/ConsoleContext';
 
-  const resetGame = () => {
-    dispatch({ type: actions.RESET });
+function Game() {
+  const [gameState, gameDispatch] = useReducer(gameReducer, { ...getInitialGameContext() });
+  const [consoleState, consoleDispatch] = useReducer(consoleReducer, {
+    ...getInitialConsoleContext(),
+  });
+
+  const { running } = gameState;
+
+  const runOrPauseExecution = () => {
+    gameDispatch({ type: gameActions.SWITCH_RUNNING });
   };
 
   return (
-    <GameContext.Provider value={{ state, dispatch }}>
-      <div className="App">
-        <Nav />
-        <header className="App-header">
-          <div className="Game-container">
-            <div className="Game-container-board">
-              <Board />
-              <button type="button" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</button>
-              <button type="button" onClick={resetGame}>RESET</button>
+    <ConsoleContext.Provider value={{ consoleState, consoleDispatch }}>
+      <GameContext.Provider value={{ gameState, gameDispatch }}>
+        <div className="App">
+          <header className="App-container">
+            <div className="Game-container">
+              <div className="Game-container-content">
+                <Board />
+                <CommandSelector />
+              </div>
+              <div className="Game-container-footer">
+                <Link className="Game-button" to="/">BACK TO MENU</Link>
+                <Console />
+                <button className="Game-button" type="button" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</button>
+              </div>
             </div>
-            <CommandSelector />
-          </div>
-        </header>
-      </div>
-    </GameContext.Provider>
+          </header>
+        </div>
+      </GameContext.Provider>
+    </ConsoleContext.Provider>
   );
 }
 

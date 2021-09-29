@@ -29,7 +29,7 @@ export const reducer = (state, action) => {
     case actions.MOVE:
       return { ...state, board: [...payload.board] };
     case actions.RESET:
-      return { ...getInitialGameContext() };
+      return { ...getInitialGameContext(), commandList: state.commandList };
     case actions.SWITCH_RUNNING:
       return { ...state, running: !state.running };
     case actions.NEXT_COMMAND:
