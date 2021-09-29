@@ -53,10 +53,13 @@ export function AuthProvider({ children }) {
     dispatch({ type: actions.logOut });
   };
 
+  const isAuthenticated = () => user?.isAuthenticated;
+
   const value = {
     logIn,
     logOut,
     user,
+    isAuthenticated,
   };
 
   return (

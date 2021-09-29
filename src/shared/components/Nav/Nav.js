@@ -1,10 +1,13 @@
 import React from 'react';
+import './Nav.scss';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 
 const Nav = () => {
-  const { logOut } = useAuth();
+  const { logOut, isAuthenticated } = useAuth();
   const history = useHistory();
+
+  if (isAuthenticated()) history.push('/');
 
   const handleLogOut = () => {
     logOut();

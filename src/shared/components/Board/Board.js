@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-
+import './Board.scss';
 import useGameHandler from '../../../hooks/useGameHandler';
 import GameContext from '../../../context/GameContext';
 import actions from '../../store/game/actions';

@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
+import './Game.scss';
 import { Link } from 'react-router-dom';
 
-import Nav from '../../shared/components/Nav';
 import Board from '../../shared/components/Board';
 import Console from '../../shared/components/Console';
 import CommandSelector from '../../shared/components/CommandSelector';
@@ -29,7 +29,6 @@ function Game() {
     <ConsoleContext.Provider value={{ consoleState, consoleDispatch }}>
       <GameContext.Provider value={{ gameState, gameDispatch }}>
         <div className="App">
-          <Nav />
           <header className="App-container">
             <div className="Game-container">
               <div className="Game-container-content">

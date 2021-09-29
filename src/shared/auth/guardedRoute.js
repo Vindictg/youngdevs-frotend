@@ -3,12 +3,14 @@ import { Route, Redirect } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const GuardedRoute = ({ component: Component, ...rest }) => {
-  const { user } = useAuth();
+  const { isAuthenticated } = useAuth();
+  console.log(isAuthenticated());
+
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (user.isAuthenticated) {
+        if (isAuthenticated()) {
           return <Component {...props} />;
         }
         return (
