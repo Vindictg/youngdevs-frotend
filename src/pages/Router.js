@@ -1,22 +1,29 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 
 import Game from './Game';
 import Home from './Home';
 import Login from './Login';
 import GuardedRoute from '../shared/auth/guardedRoute';
-import { AuthProvider } from '../context/AuthContext';
+import GuardedLoginRoute from '../shared/auth/guardedLoginRoute';
+import useAuth from '../hooks/useAuth';
 
-const Router = () => (
-  <BrowserRouter>
-    <AuthProvider>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <GuardedRoute exact path="/game" component={Game} />
-        <GuardedRoute exact path="/" component={Home} />
-      </Switch>
-    </AuthProvider>
-  </BrowserRouter>
-);
+const Router = () => {
+  const { authLoading } = useAuth();
+
+  return (
+    <>
+      { !authLoading && (
+        <BrowserRouter>
+          <Switch>
+            <GuardedLoginRoute exact path="/login" component={Login} />
+            <GuardedRoute exact path="/game" component={Game} />
+            <GuardedRoute exact path="/" component={Home} />
+          </Switch>
+        </BrowserRouter>
+      )}
+    </>
+  );
+};
 
 export default Router;
