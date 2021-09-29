@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-
+import './Console.scss';
 import ConsoleContext from '../../../context/ConsoleContext';
 import keyUtil from '../../../utils/keyUtil';
 

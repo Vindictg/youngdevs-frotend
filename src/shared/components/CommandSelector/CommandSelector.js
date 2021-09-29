@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-
+import './CommandSelector.scss';
 import GameContext from '../../../context/GameContext';
 import { commands } from '../../models/commands';
 import actions from '../../store/game/actions';

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Nav.scss';
 import { Link, useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 
