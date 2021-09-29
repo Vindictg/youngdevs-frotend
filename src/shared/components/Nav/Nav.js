@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 
 const Nav = () => {
-  const { logOut } = useAuth();
+  const { logOut, user } = useAuth();
   const history = useHistory();
 
   const handleLogOut = () => {
@@ -18,7 +18,7 @@ const Nav = () => {
         <div className="Nav-content">
           <Link className="Nav-link" to="/">YoungDevs</Link>
           <div className="Nav-content">
-            <button type="button" className="Nav-link" onClick={handleLogOut}>Logout</button>
+            { user.isAuthenticated ? <button type="button" className="Nav-link" onClick={handleLogOut}>Logout</button> : <></> }
           </div>
         </div>
       </div>
