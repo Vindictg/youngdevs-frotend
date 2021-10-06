@@ -7,6 +7,7 @@ import {
 import { getInitialState, reducer } from '../../shared/store/auth/reducer';
 import { actions } from '../../shared/store/auth/actions';
 import firebaseConfig from '../../config/firebase';
+import UserProvider from '../../providers/UserProvider';
 
 initializeApp(firebaseConfig);
 const auth = getAuth();
@@ -23,21 +24,38 @@ function useAuth() {
         isAuthenticated: !!userAuthenticated,
         name: userAuthenticated?.displayName,
         email: userAuthenticated?.email,
+        authProviderUserId: userAuthenticated?.uid,
         tokenId: userAuthenticated?.accessToken,
       };
+
+      if (userAuthenticated) {
+        const ur = await UserProvider.getUserData(userAuthenticated.uid, userAuthenticated.email);
+        userPayload.isPremium = ur.IsPremium;
+        userPayload.isAdmin = ur.IsAdmin;
+        userPayload.isLocked = ur.IsLocked;
+        userPayload.id = ur.ID;
+      }
+
       dispatch({ type: actions.loadUserProfile, payload: userPayload });
       setAuthLoading(false);
     });
   }, []);
 
   const logIn = async () => {
-    signInWithPopup(auth, provider).then((r) => {
+    signInWithPopup(auth, provider).then(async (r) => {
       if (r.user) {
+        // eslint-disable-next-line max-len
+        const ur = await UserProvider.getUserData(r.user.uid, r.user.email);
         const userPayload = {
           isAuthenticated: true,
           name: r.user?.displayName,
           email: r.user?.email,
+          authProviderUserId: r.user?.uid,
           tokenId: r.user?.accessToken,
+          isPremium: ur.IsPremium,
+          isAdmin: ur.IsAdmin,
+          isLocked: ur.IsLocked,
+          id: ur.ID,
         };
         dispatch({ type: actions.loadUserProfile, payload: userPayload });
         history.push('/');

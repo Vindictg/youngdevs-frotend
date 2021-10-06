@@ -3,11 +3,11 @@ import authHeaderProvider from '../../shared/auth/authHeadersHelper';
 
 import config from '../../config/env';
 
-const postUserID = async (userID) => {
-  const body = { email: userID };
-  const postUserURL = `${config.apiURL}/user`;
+// eslint-disable-next-line no-unused-vars
+const getUserData = async (authProviderUserId, email) => {
+  const postUserURL = `${config.apiURL}/user?authProviderUserId=${authProviderUserId}&email=${email}`;
   try {
-    const result = await axios.post(postUserURL, JSON.stringify(body),
+    const result = await axios.get(postUserURL, undefined,
       {
         headers: await authHeaderProvider.getAuthHeaders(),
       });
@@ -18,5 +18,5 @@ const postUserID = async (userID) => {
 };
 
 export default {
-  postUserID,
+  getUserData,
 };

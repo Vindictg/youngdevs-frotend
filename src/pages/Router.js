@@ -6,10 +6,12 @@ import Home from './Home';
 import Login from './Login';
 import Premium from './Premium';
 import Ranking from './Ranking';
+import Admin from './Admin';
 import Support from './Support';
 import Nav from '../shared/components/Nav';
 import GuardedRoute from '../shared/auth/guardedRoute';
 import GuardedLoginRoute from '../shared/auth/guardedLoginRoute';
+import GuardedAdminRoute from '../shared/auth/guardedAdminRoute';
 import useAuth from '../hooks/useAuth';
 
 const Router = () => {
@@ -26,6 +28,7 @@ const Router = () => {
             <GuardedRoute exact path="/premium" component={Premium} />
             <GuardedRoute exact path="/ranking" component={Ranking} />
             <GuardedRoute exact path="/support" component={Support} />
+            <GuardedAdminRoute exact path="/admin" component={Admin} />
             <GuardedRoute exact path="/" component={Home} />
           </Switch>
           <div className="App-rights">All Rights Reserved YoungDevs &copy;</div>

@@ -5,6 +5,11 @@ export const getInitialState = (userAuthenticated) => ({
   name: userAuthenticated?.displayName,
   email: userAuthenticated?.email,
   tokenId: userAuthenticated?.accessToken,
+  authProviderUserId: userAuthenticated?.uid,
+  isPremium: userAuthenticated?.isPremium,
+  isAdmin: userAuthenticated?.isAdmin,
+  isLocked: userAuthenticated?.isAdmin,
+  id: userAuthenticated?.id,
 });
 
 export const reducer = (state, action) => {
@@ -16,6 +21,11 @@ export const reducer = (state, action) => {
         name: payload.name,
         email: payload.email,
         tokenId: payload.tokenId,
+        authProviderUserId: payload.uid,
+        isPremium: payload.isPremium,
+        isAdmin: payload.isAdmin,
+        isLocked: payload.isLocked,
+        id: payload.id,
       };
     case actions.logOut:
       return { ...state, isAuthenticated: false };

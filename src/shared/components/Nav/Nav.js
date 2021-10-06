@@ -18,6 +18,7 @@ const Nav = () => {
         <div className="Nav-content">
           <Link className="Nav-link" to="/">YoungDevs</Link>
           <div className="Nav-content">
+            { user.isAuthenticated && user.isAdmin ? <Link className="Nav-link" to="/admin">Admin Panel</Link> : <></> }
             { user.isAuthenticated ? <button type="button" className="Nav-link" onClick={handleLogOut}>Logout</button> : <></> }
           </div>
         </div>
