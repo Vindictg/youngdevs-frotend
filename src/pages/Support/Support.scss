@@ -1,4 +1,8 @@
-.Support{    
+.Support{
+    &-content{
+        display: inline-block;
+    }
+
     &-title{
         color: black;
         text-transform: uppercase;
