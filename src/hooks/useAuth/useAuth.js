@@ -29,7 +29,7 @@ function useAuth() {
       };
 
       if (userAuthenticated) {
-        const ur = await UserProvider.getUserData(userAuthenticated.uid, userAuthenticated.email);
+        const ur = await UserProvider.getUserData();
         userPayload.isPremium = ur.IsPremium;
         userPayload.isAdmin = ur.IsAdmin;
         userPayload.isLocked = ur.IsLocked;
@@ -45,7 +45,7 @@ function useAuth() {
     signInWithPopup(auth, provider).then(async (r) => {
       if (r.user) {
         // eslint-disable-next-line max-len
-        const ur = await UserProvider.getUserData(r.user.uid, r.user.email);
+        const ur = await UserProvider.getUserData();
         const userPayload = {
           isAuthenticated: true,
           name: r.user?.displayName,
