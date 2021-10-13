@@ -1,26 +1,14 @@
 import actions from './actions';
 
-const initialBoard = [
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-];
-
 const initialPlayerPosition = { i: 0, j: 0 };
 
-export const getInitialGameContext = () => {
-  const boardCopy = initialBoard.map((row) => row.slice());
-
-  return ({
-    running: false,
-    board: boardCopy,
-    playerPosition: initialPlayerPosition,
-    nextMovement: 0,
-    commandList: [],
-  });
-};
+export const getInitialGameContext = () => ({
+  running: false,
+  board: [],
+  playerPosition: initialPlayerPosition,
+  nextMovement: 0,
+  commandList: [],
+});
 
 export const reducer = (state, action) => {
   const { type, payload } = action;
@@ -29,7 +17,11 @@ export const reducer = (state, action) => {
     case actions.MOVE:
       return { ...state, board: [...payload.board] };
     case actions.RESET:
-      return { ...getInitialGameContext(), commandList: state.commandList };
+      return {
+        ...getInitialGameContext(),
+        commandList: state.commandList,
+        board: payload.board.map((row) => row.slice()),
+      };
     case actions.SWITCH_RUNNING:
       return { ...state, running: !state.running };
     case actions.NEXT_COMMAND:
@@ -43,6 +35,8 @@ export const reducer = (state, action) => {
         ...state,
         commandList: state.commandList.filter((_value, key) => payload.commandID !== key),
       };
+    case actions.UPDATE_BOARD:
+      return { ...state, board: payload.board.map((row) => row.slice()) };
     default:
       throw new Error('action is not defined');
   }
