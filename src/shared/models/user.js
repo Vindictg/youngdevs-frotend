@@ -5,7 +5,7 @@ export const user = {
   isAdmin: false,
   isLocked: false,
   isPremium: false,
-  isAuthenticaded: false,
+  isAuthenticated: false,
 };
 
 export default user;

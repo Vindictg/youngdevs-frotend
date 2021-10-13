@@ -6,6 +6,7 @@ const actions = {
   UPDATE_PLAYER_POSITION: 'update_player_position',
   ADD_COMMAND: 'add_command',
   REMOVE_COMMAND: 'remove_command',
+  UPDATE_BOARD: 'update_board',
 };
 
 export default actions;

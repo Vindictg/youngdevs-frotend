@@ -6,7 +6,7 @@ import actions from '../../store/game/actions';
 
 const movementDelay = 500;
 
-function Board() {
+function Board({ initialBoard }) {
   const { gameState, gameDispatch } = useContext(GameContext);
   const GameHandler = useGameHandler();
 
@@ -37,7 +37,7 @@ function Board() {
       }, movementDelay);
     } else if (nextMovement === commandList.length) {
       setTimeout(() => {
-        gameDispatch({ type: actions.RESET });
+        gameDispatch({ type: actions.RESET, payload: { board: initialBoard } });
       }, movementDelay * 2);
     }
   }, [running, nextMovement]);
