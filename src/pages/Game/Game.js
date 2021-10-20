@@ -1,6 +1,9 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import './Game.scss';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
+
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
 
 import Board from '../../shared/components/Board';
 import Console from '../../shared/components/Console';
@@ -23,6 +26,21 @@ function Game() {
   });
 
   const [levelLoaded, setLevelLoaded] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const routerHistory = useHistory();
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const changeToNextLevel = () => {
+    routerHistory.push(`/game/${Number(levelID) + 1}`);
+    setOpenModal(false);
+  };
+
+  const redirectBackToMenu = () => {
+    routerHistory.push('/');
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +53,7 @@ function Game() {
     };
 
     fetchData();
-  }, []);
+  }, [levelID]);
 
   const { running } = gameState;
 
@@ -52,7 +70,7 @@ function Game() {
           <header className="App-container">
             <div className="Game-container">
               <div className="Game-container-content">
-                <Board initialBoard={levelLoaded} />
+                <Board initialBoard={levelLoaded} handleOpenModal={handleOpenModal} />
                 <CommandSelector />
               </div>
               <div className="Game-container-footer">
@@ -63,6 +81,25 @@ function Game() {
             </div>
           </header>
         </div>
+        <Modal
+          open={openModal}
+          onClose={redirectBackToMenu}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          className="Modal"
+        >
+          <div className="Modal-container">
+            <span className="Modal-title">LEVEL COMPLETED!</span>
+            <div className="Modal-buttons-container">
+              <Button variant="contained" color="primary" onClick={redirectBackToMenu}>
+                BACK TO MENU
+              </Button>
+              <Button variant="contained" color="primary" onClick={changeToNextLevel}>
+                NEXT LEVEL
+              </Button>
+            </div>
+          </div>
+        </Modal>
       </GameContext.Provider>
     </ConsoleContext.Provider>
     )

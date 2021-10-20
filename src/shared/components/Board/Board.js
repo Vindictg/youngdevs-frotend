@@ -6,7 +6,7 @@ import actions from '../../store/game/actions';
 
 const movementDelay = 500;
 
-function Board({ initialBoard }) {
+function Board({ initialBoard, handleOpenModal }) {
   const { gameState, gameDispatch } = useContext(GameContext);
   const GameHandler = useGameHandler();
 
@@ -23,6 +23,12 @@ function Board({ initialBoard }) {
 
   const doMovement = (movement) => {
     const GameStateUpdated = GameHandler.doMovement(board, movement, playerPosition);
+
+    if (GameStateUpdated.winner) {
+      handleOpenModal();
+      gameDispatch({ type: actions.RESET, payload: { board: initialBoard } });
+      return;
+    }
 
     gameDispatch({
       type: actions.UPDATE_PLAYER_POSITION,

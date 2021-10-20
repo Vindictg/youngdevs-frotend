@@ -34,3 +34,31 @@
     justify-content: center;
   }
 }
+
+.Modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  &-container {
+    width: 26rem;
+    padding: 1.5rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &-buttons-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
