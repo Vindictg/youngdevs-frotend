@@ -17,6 +17,8 @@ function Board({ initialBoard }) {
   const cellInformation = {
     0: { className: 'Board-cell-empty' },
     1: { className: 'Board-cell-player' },
+    2: { className: 'Board-cell-wall' },
+    3: { className: 'Board-cell-goal' },
   };
 
   const doMovement = (movement) => {

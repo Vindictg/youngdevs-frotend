@@ -10,8 +10,8 @@ function Home() {
           <h3>SCORE:99999</h3>
           <h3>CURRENT LEVEL:2</h3>
           <div className="Home-link-content">
-            <Link className="App-link" to="/game">PLAY</Link>
-            <Link className="App-link" to="/game">LEVELS</Link>
+            <Link className="App-link" to="/game/1">PLAY</Link>
+            <Link className="App-link" to="/game/1">LEVELS</Link>
             <Link className="App-link" to="/ranking">RANKING</Link>
             <Link className="App-link" to="/premium">¡PREMIUM!</Link>
             <Link className="App-link" to="/support">SUPPORT</Link>

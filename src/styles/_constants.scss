@@ -1,11 +1,14 @@
 // colors
-$cell-white: #FFFFFF;
-$cell-green: green;
+$cell-empty: #FFFFFF;
+$cell-player: rgb(77, 126, 172);
+$cell-wall: rgb(104, 104, 104);
+$cell-goal: rgb(159, 206, 159);
 $background-gray: gray;
 $background-white: #FFFFFF;
 $gray-light: #cecece;
 $console-background: #2b2b2b;
 $yellow-text: #fff700;
+$green-text: #79cc79;
 
 // sizes
 $cell-size: 2.5rem;

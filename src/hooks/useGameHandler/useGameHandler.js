@@ -24,6 +24,15 @@ const moveMessages = {
   LEFT_ERROR: 'move to LEFT failed!',
 };
 
+const goalMessage = 'you have arrive to the goal!';
+
+const checkEdges = (playerPosition, operation, newBoard) => (
+  playerPosition.i + operation.i > newBoard.length - 1
+  || playerPosition.i + operation.i < 0
+  || playerPosition.j + operation.j > newBoard[0].length - 1
+  || playerPosition.j + operation.j < 0
+);
+
 function useGameHandler() {
   const { consoleDispatch } = useContext(ConsoleContext);
 
@@ -32,22 +41,29 @@ function useGameHandler() {
   }) => {
     const newBoard = [...board];
 
-    try {
-      newBoard[playerPosition.i + operation.i][playerPosition.j + operation.j] = cells.PLAYER;
-      newBoard[playerPosition.i][playerPosition.j] = cells.EMPTY;
-
-      consoleDispatch({ type: consoleActions.WRITE_INFO, payload: { text: successMessage } });
-      return {
-        board: newBoard,
-        playerPosition: { i: playerPosition.i + operation.i, j: playerPosition.j + operation.j },
-      };
-    } catch (error) {
-      consoleDispatch({
-        type: consoleActions.WRITE_WARNING,
-        payload: { text: errorMessage },
-      });
+    if (checkEdges(playerPosition, operation, newBoard)) {
+      consoleDispatch({ type: consoleActions.WRITE_WARNING, payload: { text: errorMessage } });
       return { board: newBoard, playerPosition };
     }
+
+    if (newBoard[playerPosition.i + operation.i][playerPosition.j + operation.j] === cells.WALL) {
+      consoleDispatch({ type: consoleActions.WRITE_WARNING, payload: { text: errorMessage } });
+      return { board: newBoard, playerPosition };
+    }
+
+    if (newBoard[playerPosition.i + operation.i][playerPosition.j + operation.j] === cells.GOAL) {
+      consoleDispatch({ type: consoleActions.WRITE_SUCCESS, payload: { text: goalMessage } });
+      return { board: newBoard, playerPosition, winner: true };
+    }
+
+    newBoard[playerPosition.i + operation.i][playerPosition.j + operation.j] = cells.PLAYER;
+    newBoard[playerPosition.i][playerPosition.j] = cells.EMPTY;
+
+    consoleDispatch({ type: consoleActions.WRITE_INFO, payload: { text: successMessage } });
+    return {
+      board: newBoard,
+      playerPosition: { i: playerPosition.i + operation.i, j: playerPosition.j + operation.j },
+    };
   };
 
   const doMovement = (board, movement, playerPosition) => {

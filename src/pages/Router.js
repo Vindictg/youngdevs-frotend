@@ -24,7 +24,7 @@ const Router = () => {
           <Nav />
           <Switch>
             <GuardedLoginRoute exact path="/login" component={Login} />
-            <GuardedRoute exact path="/game" component={Game} />
+            <GuardedRoute exact path="/game/:level" component={Game} />
             <GuardedRoute exact path="/premium" component={Premium} />
             <GuardedRoute exact path="/ranking" component={Ranking} />
             <GuardedRoute exact path="/support" component={Support} />

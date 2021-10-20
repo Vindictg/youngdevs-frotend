@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import './Game.scss';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import Board from '../../shared/components/Board';
 import Console from '../../shared/components/Console';
@@ -15,6 +15,8 @@ import ConsoleContext from '../../context/ConsoleContext';
 import LevelProvider from '../../providers/LevelProvider';
 
 function Game() {
+  const { level: levelID } = useParams();
+
   const [gameState, gameDispatch] = useReducer(gameReducer, { ...getInitialGameContext() });
   const [consoleState, consoleDispatch] = useReducer(consoleReducer, {
     ...getInitialConsoleContext(),
@@ -24,7 +26,7 @@ function Game() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { Map: gameLevel } = await LevelProvider.getLevel(1);
+      const { Map: gameLevel } = await LevelProvider.getLevel(levelID);
 
       const gameLevelMapped = JSON.parse(gameLevel);
 
