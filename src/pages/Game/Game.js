@@ -10,6 +10,7 @@ import Console from '../../shared/components/Console';
 import CommandSelector from '../../shared/components/CommandSelector';
 
 import gameActions from '../../shared/store/game/actions';
+import consoleActions from '../../shared/store/console/actions';
 import { reducer as gameReducer, getInitialGameContext } from '../../shared/store/game/reducer';
 import GameContext from '../../context/GameContext';
 
@@ -25,6 +26,7 @@ function Game() {
     ...getInitialConsoleContext(),
   });
 
+  const [levelName, setLevelName] = useState('');
   const [levelLoaded, setLevelLoaded] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const routerHistory = useHistory();
@@ -34,6 +36,9 @@ function Game() {
   };
 
   const changeToNextLevel = () => {
+    gameDispatch({ type: gameActions.RESET_COMMAND_LIST });
+    consoleDispatch({ type: consoleActions.RESET });
+
     routerHistory.push(`/game/${Number(levelID) + 1}`);
     setOpenModal(false);
   };
@@ -44,12 +49,13 @@ function Game() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { Map: gameLevel } = await LevelProvider.getLevel(levelID);
+      const { Map: gameLevel, Name: name } = await LevelProvider.getLevel(levelID);
 
       const gameLevelMapped = JSON.parse(gameLevel);
 
-      setLevelLoaded(gameLevelMapped);
       gameDispatch({ type: gameActions.UPDATE_BOARD, payload: { board: gameLevelMapped } });
+      setLevelName(name);
+      setLevelLoaded(gameLevelMapped);
     };
 
     fetchData();
@@ -69,6 +75,10 @@ function Game() {
         <div className="App">
           <header className="App-container">
             <div className="Game-container">
+              <div className="Game-container-header">
+                <span className="Game-container-header-title">{levelName}</span>
+                <span className="Game-container-header-timer">00:00</span>
+              </div>
               <div className="Game-container-content">
                 <Board initialBoard={levelLoaded} handleOpenModal={handleOpenModal} />
                 <CommandSelector />

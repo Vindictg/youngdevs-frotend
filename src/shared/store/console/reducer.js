@@ -33,6 +33,8 @@ export const reducer = (state, action) => {
           { text: payload.text, type: messageTypes.SUCCESS },
         ],
       };
+    case actions.RESET:
+      return { ...getInitialConsoleContext() };
     default:
       throw new Error('action is not defined');
   }

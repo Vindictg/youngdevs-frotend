@@ -22,6 +22,8 @@ export const reducer = (state, action) => {
         commandList: state.commandList,
         board: payload.board.map((row) => row.slice()),
       };
+    case actions.RESET_COMMAND_LIST:
+      return { ...state, commandList: [] };
     case actions.SWITCH_RUNNING:
       return { ...state, running: !state.running };
     case actions.NEXT_COMMAND:
