@@ -1,32 +1,49 @@
 import React from 'react';
 import './UserPanelRow.scss';
+import {
+  TableCell, TableRow, Button,
+} from '@material-ui/core';
+import UserProvider from '../../../../providers/UserProvider';
 
 function UserPanelRow(props) {
   const { user } = props;
-  const handleAction = () => {
-    const action = 'ada';
-    switch (action) {
-      case 'Premium':
-        console.log(action);
-        break;
-      case 'Lock':
-        console.log(action);
-        break;
-      default:
-        console.log(action);
-        break;
+
+  const handleAction = async (action) => {
+    if (action !== 'Reset') {
+      switch (action) {
+        case 'Premium':
+          user.IsPremium = !user.IsPremium;
+          break;
+        case 'Admin':
+          user.IsAdmin = !user.IsAdmin;
+          break;
+        case 'Lock':
+          user.IsLocked = !user.IsLocked;
+          break;
+        default:
+          console.log(action);
+          break;
+      }
+      await UserProvider.updateUser(user);
+    } else {
+      await UserProvider.reset(user.ID);
     }
   };
 
   return (
-    <tr>
-      <td>{user?.email}</td>
-      <td className="table-content">
-        <button type="button" onClick={handleAction}>{user.isPremium ? 'REMOVE PREMIUM' : 'PREMIUM'}</button>
-        <button type="button" onClick={handleAction}>{user.isLock ? 'UNLOCK' : 'LOCK'}</button>
-        <button type="button" onClick={handleAction}>RESET</button>
-      </td>
-    </tr>
+    <TableRow
+      key={user?.ID}
+    >
+      <TableCell component="th" scope="row">
+        {user?.Email}
+      </TableCell>
+      <TableCell align="right">
+        <Button variant="contained" className="button" onClick={() => handleAction('Admin')}>{user?.IsAdmin ? 'REMOVE ADMIN' : 'ADMIN'}</Button>
+        <Button variant="contained" className="button" color="primary" onClick={() => handleAction('Premium')}>{user?.IsPremium ? 'REMOVE PREMIUM' : 'PREMIUM'}</Button>
+        <Button variant="contained" className="button" color="default" onClick={() => handleAction('Lock')}>{user?.IsLocked ? 'UNLOCK' : 'LOCK'}</Button>
+        <Button variant="contained" className="button" color="secondary" onClick={() => handleAction('Reset')}>RESET</Button>
+      </TableCell>
+    </TableRow>
   );
 }
 

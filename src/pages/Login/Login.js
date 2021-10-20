@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import useAuth from '../../hooks/useAuth';
 
 function Login() {
@@ -13,9 +13,10 @@ function Login() {
     <div className="App">
       <div className="App-container">
         <div className="Login-content">
-          <h1>YoungDevs</h1>
-          <h3>Learning to code has never been so easy, join thousands of students learn,</h3>
-          <h3>compare and have fun with others.</h3>
+          <Typography variant="h3">YoungDevs</Typography>
+          <Typography variant="h5">Learning to code has never been so easy, join thousands of students learn,</Typography>
+          <Typography variant="h5">compare and have fun with others.</Typography>
+          <br />
           <Button variant="contained" className="App-link" onClick={handleLogIn}>Google Login</Button>
         </div>
       </div>
