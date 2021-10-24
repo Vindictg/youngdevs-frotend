@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './UserPanelRow.scss';
 import {
   TableCell, TableRow, Button,
@@ -7,18 +7,24 @@ import UserProvider from '../../../../providers/UserProvider';
 
 function UserPanelRow(props) {
   const { user } = props;
+  const [isPremium, setPremium] = useState(user?.IsPremium);
+  const [isLocked, setLock] = useState(user?.IsLocked);
+  const [isAdmin, setAdmin] = useState(user?.IsAdmin);
 
   const handleAction = async (action) => {
     if (action !== 'Reset') {
       switch (action) {
         case 'Premium':
-          user.IsPremium = !user.IsPremium;
+          user.IsPremium = !isPremium;
+          setPremium(user.isPremium);
           break;
         case 'Admin':
-          user.IsAdmin = !user.IsAdmin;
+          user.IsAdmin = !isAdmin;
+          setAdmin(user.IsAdmin);
           break;
         case 'Lock':
-          user.IsLocked = !user.IsLocked;
+          user.IsLocked = !isLocked;
+          setLock(user.IsLocked);
           break;
         default:
           console.log(action);
@@ -38,9 +44,9 @@ function UserPanelRow(props) {
         {user?.Email}
       </TableCell>
       <TableCell align="right">
-        <Button variant="contained" className="button" onClick={() => handleAction('Admin')}>{user?.IsAdmin ? 'REMOVE ADMIN' : 'ADMIN'}</Button>
-        <Button variant="contained" className="button" color="primary" onClick={() => handleAction('Premium')}>{user?.IsPremium ? 'REMOVE PREMIUM' : 'PREMIUM'}</Button>
-        <Button variant="contained" className="button" color="default" onClick={() => handleAction('Lock')}>{user?.IsLocked ? 'UNLOCK' : 'LOCK'}</Button>
+        { !isLocked ? <Button variant="contained" className="button" onClick={() => handleAction('Admin')}>{isAdmin ? 'REMOVE ADMIN' : 'ADMIN'}</Button> : <></> }
+        <Button variant="contained" className="button" color="primary" onClick={() => handleAction('Premium')}>{isPremium ? 'REMOVE PREMIUM' : 'PREMIUM'}</Button>
+        { !isAdmin ? <Button variant="contained" className="button" color="default" onClick={() => handleAction('Lock')}>{isLocked ? 'UNLOCK' : 'LOCK'}</Button> : <></> }
         <Button variant="contained" className="button" color="secondary" onClick={() => handleAction('Reset')}>RESET</Button>
       </TableCell>
     </TableRow>
