@@ -14,13 +14,25 @@
 
     &-empty {
       @extend .Board-cell;
-      background-color: $cell-white;
+      background-color: $cell-empty;
       display: inline-block;
     }
 
     &-player {
       @extend .Board-cell;
-      background-color: $cell-green;
+      background-color: $cell-player;
+      display: inline-block;
+    }
+
+    &-wall {
+      @extend .Board-cell;
+      background-color: $cell-wall;
+      display: inline-block;
+    }
+
+    &-goal {
+      @extend .Board-cell;
+      background-color: $cell-goal;
       display: inline-block;
     }
   }

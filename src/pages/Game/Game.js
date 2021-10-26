@@ -1,12 +1,16 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import './Game.scss';
-import { Link } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
+
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
 
 import Board from '../../shared/components/Board';
 import Console from '../../shared/components/Console';
 import CommandSelector from '../../shared/components/CommandSelector';
 
 import gameActions from '../../shared/store/game/actions';
+import consoleActions from '../../shared/store/console/actions';
 import { reducer as gameReducer, getInitialGameContext } from '../../shared/store/game/reducer';
 import GameContext from '../../context/GameContext';
 
@@ -15,25 +19,47 @@ import ConsoleContext from '../../context/ConsoleContext';
 import LevelProvider from '../../providers/LevelProvider';
 
 function Game() {
+  const { level: levelID } = useParams();
+
   const [gameState, gameDispatch] = useReducer(gameReducer, { ...getInitialGameContext() });
   const [consoleState, consoleDispatch] = useReducer(consoleReducer, {
     ...getInitialConsoleContext(),
   });
 
+  const [levelName, setLevelName] = useState('');
   const [levelLoaded, setLevelLoaded] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const routerHistory = useHistory();
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const changeToNextLevel = () => {
+    gameDispatch({ type: gameActions.RESET_COMMAND_LIST });
+    consoleDispatch({ type: consoleActions.RESET });
+
+    routerHistory.push(`/game/${Number(levelID) + 1}`);
+    setOpenModal(false);
+  };
+
+  const redirectBackToMenu = () => {
+    routerHistory.push('/');
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      const { Map: gameLevel } = await LevelProvider.getLevel(1);
+      const { Map: gameLevel, Name: name } = await LevelProvider.getLevel(levelID);
 
       const gameLevelMapped = JSON.parse(gameLevel);
 
-      setLevelLoaded(gameLevelMapped);
       gameDispatch({ type: gameActions.UPDATE_BOARD, payload: { board: gameLevelMapped } });
+      setLevelName(name);
+      setLevelLoaded(gameLevelMapped);
     };
 
     fetchData();
-  }, []);
+  }, [levelID]);
 
   const { running } = gameState;
 
@@ -49,8 +75,12 @@ function Game() {
         <div className="App">
           <header className="App-container">
             <div className="Game-container">
+              <div className="Game-container-header">
+                <span className="Game-container-header-title">{levelName}</span>
+                <span className="Game-container-header-timer">00:00</span>
+              </div>
               <div className="Game-container-content">
-                <Board initialBoard={levelLoaded} />
+                <Board initialBoard={levelLoaded} handleOpenModal={handleOpenModal} />
                 <CommandSelector />
               </div>
               <div className="Game-container-footer">
@@ -61,6 +91,25 @@ function Game() {
             </div>
           </header>
         </div>
+        <Modal
+          open={openModal}
+          onClose={redirectBackToMenu}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          className="Modal"
+        >
+          <div className="Modal-container">
+            <span className="Modal-title">LEVEL COMPLETED!</span>
+            <div className="Modal-buttons-container">
+              <Button variant="contained" color="primary" onClick={redirectBackToMenu}>
+                BACK TO MENU
+              </Button>
+              <Button variant="contained" color="primary" onClick={changeToNextLevel}>
+                NEXT LEVEL
+              </Button>
+            </div>
+          </div>
+        </Modal>
       </GameContext.Provider>
     </ConsoleContext.Provider>
     )

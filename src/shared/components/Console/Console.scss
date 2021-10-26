@@ -33,5 +33,10 @@
       @extend .Console-message;
       color: $yellow-text;
     }
+
+    &--success {
+      @extend .Console-message;
+      color: $green-text;
+    }
   }
 }
