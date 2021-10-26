@@ -26,13 +26,14 @@ function useAuth() {
         email: userAuthenticated?.email,
         authProviderUserId: userAuthenticated?.uid,
         tokenId: userAuthenticated?.accessToken,
+        avatar: userAuthenticated?.photoURL,
       };
 
       if (userAuthenticated) {
-        const ur = await UserProvider.getUserData(userAuthenticated.uid, userAuthenticated.email);
+        const ur = await UserProvider.getUserData();
         userPayload.isPremium = ur.IsPremium;
         userPayload.isAdmin = ur.IsAdmin;
-        userPayload.isLocked = ur.IsLocked;
+        userPayload.isLocked = !!ur.IsLocked;
         userPayload.id = ur.ID;
       }
 
@@ -45,16 +46,17 @@ function useAuth() {
     signInWithPopup(auth, provider).then(async (r) => {
       if (r.user) {
         // eslint-disable-next-line max-len
-        const ur = await UserProvider.getUserData(r.user.uid, r.user.email);
+        const ur = await UserProvider.getUserData();
         const userPayload = {
           isAuthenticated: true,
           name: r.user?.displayName,
           email: r.user?.email,
           authProviderUserId: r.user?.uid,
           tokenId: r.user?.accessToken,
+          avatar: r?.photoURL,
           isPremium: ur.IsPremium,
           isAdmin: ur.IsAdmin,
-          isLocked: ur.IsLocked,
+          isLocked: !!ur.IsLocked,
           id: ur.ID,
         };
         dispatch({ type: actions.loadUserProfile, payload: userPayload });
