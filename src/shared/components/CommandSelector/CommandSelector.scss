@@ -11,21 +11,47 @@
     padding: 0.5rem;
     margin: 0 0 0 0.5rem;
     background-color: #bdbdbd;
-    min-width: 4rem;
+    min-width: 6.3rem;
   }
 
   &-command {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 800;
     padding: 0.2rem 0.5rem;
     color: #212121;
     background-color: #e0e0e0;
-    margin: 0.2rem 0 0.2rem 0;
-    border-radius: 8%;
+    margin-bottom: 0.4rem;
+    border-radius: 4px;
+    min-height: 0.8rem;
   }
 
   &-command-selectable {
     @extend .CommandSelector-command;
     cursor: pointer;
+  }
+
+  &-operation-selectable {
+    @extend .CommandSelector-command;
+    cursor: pointer;
+    margin: 0;
+    text-align: initial;
+    padding: 0.1rem 0.5rem;
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-child {
+      @extend .CommandSelector-operation-selectable;
+      background-color: #ffffff;
+      margin: 0.2rem 0 0.2rem 0;
+      margin-left: 0.3rem;
+
+      &--focus {
+        @extend .CommandSelector-operation-selectable-child;
+        border: solid 1px #000;
+      }
+    }
   }
 }

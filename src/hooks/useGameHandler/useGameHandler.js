@@ -67,7 +67,7 @@ function useGameHandler() {
   };
 
   const doMovement = (board, movement, playerPosition) => {
-    switch (movement) {
+    switch (movement.id) {
       case commands.UP.id:
         return moveTo({
           board,
