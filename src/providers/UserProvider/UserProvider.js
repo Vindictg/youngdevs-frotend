@@ -42,6 +42,19 @@ const getAllUsers = async (index, pageSize) => {
   }
 };
 
+const getRanking = async () => {
+  const postUserURL = `${config.apiURL}/users/ranking`;
+  try {
+    const result = await axios.get(postUserURL,
+      {
+        headers: await authHeaderProvider.getAuthHeaders(),
+      });
+    return result.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 const reset = async (id) => {
   const postUserURL = `${config.apiURL}/users?id=${id}`;
   try {
@@ -58,6 +71,7 @@ const reset = async (id) => {
 export default {
   getUserData,
   getAllUsers,
+  getRanking,
   updateUser,
   reset,
 };

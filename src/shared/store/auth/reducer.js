@@ -11,6 +11,7 @@ export const getInitialState = (userAuthenticated) => ({
   isAdmin: userAuthenticated?.isAdmin,
   isLocked: !!userAuthenticated?.isLocked,
   id: userAuthenticated?.id,
+  score: userAuthenticated?.score,
 });
 
 export const reducer = (state, action) => {
@@ -28,6 +29,7 @@ export const reducer = (state, action) => {
         isAdmin: payload.isAdmin,
         isLocked: payload.isLocked,
         id: payload.id,
+        score: payload.score,
       };
     case actions.logOut:
       return { ...state, isAuthenticated: false };

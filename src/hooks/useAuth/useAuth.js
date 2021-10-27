@@ -35,6 +35,7 @@ function useAuth() {
         userPayload.isAdmin = ur.IsAdmin;
         userPayload.isLocked = !!ur.IsLocked;
         userPayload.id = ur.ID;
+        userPayload.score = ur.Score;
       }
 
       dispatch({ type: actions.loadUserProfile, payload: userPayload });
@@ -58,6 +59,7 @@ function useAuth() {
           isAdmin: ur.IsAdmin,
           isLocked: !!ur.IsLocked,
           id: ur.ID,
+          score: ur.Score,
         };
         dispatch({ type: actions.loadUserProfile, payload: userPayload });
         history.push('/');

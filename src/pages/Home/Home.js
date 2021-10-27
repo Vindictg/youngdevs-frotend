@@ -10,8 +10,11 @@ function Home() {
       <div className="App">
         <div className="App-container">
           <div className="Home-content">
-            <Typography variant="h5">SCORE:99999</Typography>
-            <Typography variant="h5">CURRENT LEVEL:2</Typography>
+            <Typography variant="h5">
+              SCORE:
+              {user?.score}
+            </Typography>
+            <Typography variant="h5">CURRENT LEVEL: 1</Typography>
             <br />
             <div className="Home-link-content">
               <Button disabled={user.isLocked} variant="contained" className="App-link" href="/game/1">PLAY</Button>

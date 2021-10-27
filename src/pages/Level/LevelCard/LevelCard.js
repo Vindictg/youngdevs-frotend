@@ -12,8 +12,9 @@ function LevelCard(props) {
   const history = useHistory();
 
   const handleClick = () => {
-    history.push('/game');
+    history.push(`/game/${level}`);
   };
+
   return (
     <Button onClick={handleClick} disabled={(!user.isPremium && isPremium) || !isPreviousSolved}>
       <Card>
