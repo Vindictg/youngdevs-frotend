@@ -1,17 +1,36 @@
-import React from 'react';
+import { Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Ranking.scss';
+import UserProvider from '../../providers/UserProvider';
 
 function Ranking() {
+  const [users, setUsers] = useState();
+
+  useEffect(async () => {
+    const u = await UserProvider.getRanking();
+    setUsers(u);
+  }, []);
   return (
     <div className="App">
       <div className="App-container">
         <div className="Ranking-content">
-          <h1>RANKING</h1>
+          <Typography variant="h3">RANKING</Typography>
           <div className="Ranking-table Home-link-content">
-            <h4>1.- Belen _______________________999</h4>
-            <h4>2.- Miguel ______________________998</h4>
-            <h4>3.- Jose ________________________997</h4>
+            { users?.map((u, i) => (
+              <div>
+                <Typography variant="h6" key={u.ID}>
+                  {i + 1}
+                  .-
+                  {' '}
+                  {u.Name}
+                  {' '}
+                  _________
+                  {u.Score}
+                </Typography>
+                <br />
+              </div>
+            ))}
           </div>
           <br />
           <br />

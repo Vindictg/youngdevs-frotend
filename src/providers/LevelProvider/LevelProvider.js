@@ -6,7 +6,7 @@ import config from '../../config/env';
 const getLevel = async (levelID) => {
   const postUserURL = `${config.apiURL}/level?level=${levelID}`;
   try {
-    const result = await axios.get(postUserURL, undefined,
+    const result = await axios.get(postUserURL,
       {
         headers: await authHeaderProvider.getAuthHeaders(),
       });

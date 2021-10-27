@@ -10,5 +10,10 @@
         display:flex;
         flex-direction: column;
     }
+
+    &-locked{
+        color:red;
+        padding:20px;
+    }
 }
 
