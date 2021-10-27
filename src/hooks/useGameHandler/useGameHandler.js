@@ -60,14 +60,47 @@ function useGameHandler() {
     newBoard[playerPosition.i][playerPosition.j] = cells.EMPTY;
 
     consoleDispatch({ type: consoleActions.WRITE_INFO, payload: { text: successMessage } });
+
     return {
       board: newBoard,
       playerPosition: { i: playerPosition.i + operation.i, j: playerPosition.j + operation.j },
     };
   };
 
-  const doMovement = (board, movement, playerPosition) => {
-    switch (movement.id) {
+  const executeIfDo = (board, command, playerPosition) => {
+    const operation = moveOperation[command?.action?.display];
+    const newBoard = [...board];
+
+    if (board[playerPosition.i + operation.i][playerPosition.j + operation.j]
+      === command?.condition?.cellID) {
+      return moveTo({
+        board,
+        playerPosition,
+        operation,
+        successMessage: moveMessages[command?.action?.display],
+        errorMessage: moveMessages[`${command?.action?.display}_ERROR`],
+      });
+    }
+
+    return {
+      board: newBoard,
+      playerPosition: { ...playerPosition },
+      failed: true,
+    };
+  };
+
+  const executeWhileDo = (board, command, playerPosition) => {
+    let ifDoResult = executeIfDo(board, command, playerPosition);
+
+    if (!ifDoResult?.failed) {
+      ifDoResult = { ...ifDoResult, repeatCommand: true };
+    }
+
+    return ifDoResult;
+  };
+
+  const executeCommand = (board, command, playerPosition) => {
+    switch (command.id) {
       case commands.UP.id:
         return moveTo({
           board,
@@ -100,12 +133,16 @@ function useGameHandler() {
           successMessage: moveMessages.LEFT,
           errorMessage: moveMessages.LEFT_ERROR,
         });
+      case commands.IF_DO.id:
+        return executeIfDo(board, command, playerPosition);
+      case commands.WHILE_DO.id:
+        return executeWhileDo(board, command, playerPosition);
       default:
         throw new Error('movement not allowed');
     }
   };
 
-  return { doMovement };
+  return { executeCommand };
 }
 
 export default useGameHandler;

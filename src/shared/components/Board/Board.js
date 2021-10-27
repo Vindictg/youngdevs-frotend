@@ -11,7 +11,7 @@ function Board({ initialBoard, handleOpenModal }) {
   const GameHandler = useGameHandler();
 
   const {
-    board, playerPosition, running, nextMovement, commandList,
+    board, playerPosition, running, nextCommand, commandList,
   } = gameState;
 
   const cellInformation = {
@@ -21,34 +21,51 @@ function Board({ initialBoard, handleOpenModal }) {
     3: { className: 'Board-cell-goal' },
   };
 
-  const doMovement = (movement) => {
-    const GameStateUpdated = GameHandler.doMovement(board, movement, playerPosition);
+  const executeCommand = (movement) => {
+    const gameStateUpdated = GameHandler.executeCommand(board, movement, playerPosition);
 
-    if (GameStateUpdated.winner) {
+    if (gameStateUpdated.winner) {
       handleOpenModal();
       gameDispatch({ type: actions.RESET, payload: { board: initialBoard } });
-      return;
+      return false;
     }
 
     gameDispatch({
       type: actions.UPDATE_PLAYER_POSITION,
-      payload: { playerPosition: GameStateUpdated.playerPosition },
+      payload: { playerPosition: gameStateUpdated.playerPosition },
     });
-    gameDispatch({ type: actions.MOVE, payload: { board: GameStateUpdated.board } });
+    gameDispatch({ type: actions.MOVE, payload: { board: gameStateUpdated.board } });
+
+    if (!gameStateUpdated.repeatCommand) {
+      gameDispatch({ type: actions.NEXT_COMMAND });
+    }
+
+    return gameStateUpdated.repeatCommand;
   };
 
-  useEffect(() => {
-    if (nextMovement !== commandList.length && running) {
-      setTimeout(() => {
-        doMovement(commandList[nextMovement]);
-        gameDispatch({ type: actions.NEXT_COMMAND });
-      }, movementDelay);
-    } else if (nextMovement === commandList.length) {
+  const executeFrame = async () => {
+    if (nextCommand !== commandList.length && running) {
+      const commandPromise = new Promise((resolve) => {
+        setTimeout(() => {
+          const repeatCommand = executeCommand(commandList[nextCommand]);
+          resolve(repeatCommand);
+        }, movementDelay);
+      });
+
+      const commandResult = await commandPromise;
+      if (commandResult) {
+        executeFrame();
+      }
+    } else if (nextCommand === commandList.length) {
       setTimeout(() => {
         gameDispatch({ type: actions.RESET, payload: { board: initialBoard } });
       }, movementDelay * 2);
     }
-  }, [running, nextMovement]);
+  };
+
+  useEffect(() => {
+    executeFrame();
+  }, [running, nextCommand]);
 
   const generateGameBoard = () => {
     let generatedGameBoard = [];

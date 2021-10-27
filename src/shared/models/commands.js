@@ -1,3 +1,5 @@
+import { cells } from './cells';
+
 export const commandTypes = {
   MOVEMENT: 0,
   OPERATION: 1,
@@ -29,10 +31,10 @@ export const commands = {
     id: 5, display: 'WHILE DO', type: commandTypes.OPERATION,
   },
   WALL_CELL: {
-    id: 6, display: 'WALL CELL', type: commandTypes.VALUE,
+    id: 6, display: 'WALL CELL', type: commandTypes.VALUE, cellID: cells.WALL,
   },
   EMPTY_CELL: {
-    id: 7, display: 'EMPTY CELL', type: commandTypes.VALUE,
+    id: 7, display: 'EMPTY CELL', type: commandTypes.VALUE, cellID: cells.EMPTY,
   },
 };
 

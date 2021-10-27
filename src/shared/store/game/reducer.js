@@ -6,7 +6,7 @@ export const getInitialGameContext = () => ({
   running: false,
   board: [],
   playerPosition: initialPlayerPosition,
-  nextMovement: 0,
+  nextCommand: 0,
   commandList: [],
   operationSelected: null,
 });
@@ -28,11 +28,11 @@ export const reducer = (state, action) => {
     case actions.SWITCH_RUNNING:
       return { ...state, running: !state.running };
     case actions.NEXT_COMMAND:
-      return { ...state, nextMovement: (state.nextMovement + 1) };
+      return { ...state, nextCommand: (state.nextCommand + 1) };
     case actions.UPDATE_PLAYER_POSITION:
       return { ...state, playerPosition: payload.playerPosition };
     case actions.ADD_COMMAND:
-      return { ...state, commandList: [...state.commandList, payload.command] };
+      return { ...state, commandList: [...state.commandList, { ...payload.command }] };
     case actions.REMOVE_COMMAND:
       return {
         ...state,
