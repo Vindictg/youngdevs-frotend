@@ -16,7 +16,7 @@ function UserPanelRow(props) {
       switch (action) {
         case 'Premium':
           user.IsPremium = !isPremium;
-          setPremium(user.isPremium);
+          setPremium(user.IsPremium);
           break;
         case 'Admin':
           user.IsAdmin = !isAdmin;

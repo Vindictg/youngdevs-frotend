@@ -38,7 +38,7 @@ function UserPanel() {
           </TableHead>
           <TableBody>
             { users?.map((u) => (
-              <UserPanelRow user={u} />
+              <UserPanelRow key={u.ID} user={u} />
             ))}
           </TableBody>
         </Table>
