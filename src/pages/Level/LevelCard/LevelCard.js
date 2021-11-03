@@ -36,7 +36,7 @@ function LevelCard(props) {
           </Typography>
         </Box>
         {
-        lvlState?.Score !== undefined ? (
+        lvlState?.Score && lvlState?.Score !== 0 ? (
           <Typography variant="subtitle2">
             Score:
             {' '}
