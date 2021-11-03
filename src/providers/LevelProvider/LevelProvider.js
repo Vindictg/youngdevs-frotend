@@ -17,6 +17,36 @@ const getLevel = async (levelID) => {
   }
 };
 
+const getAll = async () => {
+  const postUserURL = `${config.apiURL}/levels`;
+  try {
+    const result = await axios.get(postUserURL,
+      {
+        headers: await authHeaderProvider.getAuthHeaders(),
+      });
+
+    return result.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const getAllLevelState = async () => {
+  const postUserURL = `${config.apiURL}/level/states`;
+  try {
+    const result = await axios.get(postUserURL,
+      {
+        headers: await authHeaderProvider.getAuthHeaders(),
+      });
+
+    return result.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export default {
   getLevel,
+  getAll,
+  getAllLevelState,
 };

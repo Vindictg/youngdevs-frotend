@@ -8,25 +8,43 @@ import useAuth from '../../../hooks/useAuth';
 
 function LevelCard(props) {
   const { user } = useAuth();
-  const { level, isPremium, isPreviousSolved } = props;
+  const {
+    level, lvlState, preLvlState,
+  } = props;
   const history = useHistory();
 
   const handleClick = () => {
-    history.push(`/game/${level}`);
+    history.push(`/game/${level.Level}`);
+  };
+
+  const isAvaible = () => {
+    if (level.Level !== 1) {
+      return preLvlState?.IsSolved;
+    }
+    return true;
   };
 
   return (
-    <Button onClick={handleClick} disabled={(!user.isPremium && isPremium) || !isPreviousSolved}>
+    <Button onClick={handleClick} disabled={!isAvaible()}>
       <Card>
-        <Box className={`LevelCard-container ${!isPreviousSolved ? 'LevelCard-locked' : ''}`}>
-          { isPremium && !user.isPremium ? <Typography className="overlap" variant="subtitle2">Premium</Typography> : <></>}
+        <Box className={`LevelCard-container ${!isAvaible() ? 'LevelCard-locked' : ''}`}>
+          { level.IsPremium && !user.isPremium ? <Typography className="overlap" variant="subtitle2">Premium</Typography> : <></>}
           <Typography>
             LEVEL
             {' '}
-            {level}
+            {level.Level}
           </Typography>
         </Box>
-        <Typography variant="subtitle2">Score:</Typography>
+        {
+        lvlState?.Score !== undefined ? (
+          <Typography variant="subtitle2">
+            Score:
+            {' '}
+            {lvlState?.Score}
+          </Typography>
+        )
+          : <></>
+      }
       </Card>
     </Button>
   );
