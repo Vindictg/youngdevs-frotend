@@ -71,8 +71,11 @@ function useGameHandler() {
     const operation = moveOperation[command?.action?.display];
     const newBoard = [...board];
 
-    if (board[playerPosition.i + operation.i][playerPosition.j + operation.j]
-      === command?.condition?.cellID) {
+    if (
+      !checkEdges(playerPosition, operation, newBoard)
+      && board[playerPosition.i + operation.i][playerPosition.j + operation.j]
+      === command?.condition?.cellID
+    ) {
       return moveTo({
         board,
         playerPosition,

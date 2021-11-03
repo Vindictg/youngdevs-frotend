@@ -21,13 +21,13 @@ function Board({ initialBoard, handleOpenModal }) {
     3: { className: 'Board-cell-goal' },
   };
 
-  const executeCommand = (movement) => {
-    const gameStateUpdated = GameHandler.executeCommand(board, movement, playerPosition);
+  const executeCommand = (movement, currentPosition) => {
+    const gameStateUpdated = GameHandler.executeCommand(board, movement, currentPosition);
 
     if (gameStateUpdated.winner) {
       handleOpenModal();
       gameDispatch({ type: actions.RESET, payload: { board: initialBoard } });
-      return false;
+      return { repeatCommand: false, currentPosition };
     }
 
     gameDispatch({
@@ -40,21 +40,24 @@ function Board({ initialBoard, handleOpenModal }) {
       gameDispatch({ type: actions.NEXT_COMMAND });
     }
 
-    return gameStateUpdated.repeatCommand;
+    return {
+      repeatCommand: gameStateUpdated.repeatCommand,
+      playerPosition: gameStateUpdated.playerPosition,
+    };
   };
 
-  const executeFrame = async () => {
+  const executeFrame = async (currentPosition = playerPosition) => {
     if (nextCommand !== commandList.length && running) {
       const commandPromise = new Promise((resolve) => {
         setTimeout(() => {
-          const repeatCommand = executeCommand(commandList[nextCommand]);
-          resolve(repeatCommand);
+          resolve();
         }, movementDelay);
       });
 
-      const commandResult = await commandPromise;
-      if (commandResult) {
-        executeFrame();
+      await commandPromise;
+      const executionData = executeCommand(commandList[nextCommand], currentPosition);
+      if (executionData.repeatCommand) {
+        executeFrame(executionData.playerPosition);
       }
     } else if (nextCommand === commandList.length) {
       setTimeout(() => {
