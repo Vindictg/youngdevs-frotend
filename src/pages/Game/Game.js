@@ -35,6 +35,11 @@ function Game() {
 
   const { running, time, commandList } = gameState;
 
+  useEffect(async () => {
+    const lvlState = await LevelProvider.getLevelState(levelID - 1);
+    if (!lvlState.IsSolved && levelID !== '1') routerHistory.push('/levels');
+  }, []);
+
   const handleOpenModal = () => {
     setOpenModal(true);
   };
