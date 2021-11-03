@@ -9,6 +9,7 @@ export const getInitialGameContext = () => ({
   nextCommand: 0,
   commandList: [],
   operationSelected: null,
+  time: 0,
 });
 
 export const reducer = (state, action) => {
@@ -63,6 +64,8 @@ export const reducer = (state, action) => {
     }
     case actions.SET_AVAILABLE_COMMANDS:
       return { ...state, availableCommands: payload.commandsMapped };
+    case actions.ADD_TIME:
+      return { ...state, time: state.time + 1 };
     default:
       throw new Error('action is not defined');
   }

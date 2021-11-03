@@ -6,6 +6,7 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 
 import Board from '../../shared/components/Board';
+import Timer from '../../shared/components/Timer';
 import Console from '../../shared/components/Console';
 import CommandSelector from '../../shared/components/CommandSelector';
 
@@ -83,7 +84,7 @@ function Game() {
             <div className="Game-container">
               <div className="Game-container-header">
                 <span className="Game-container-header-title">{levelName}</span>
-                <span className="Game-container-header-timer">00:00</span>
+                <Timer />
               </div>
               <div className="Game-container-content">
                 <Board initialBoard={levelLoaded} handleOpenModal={handleOpenModal} />

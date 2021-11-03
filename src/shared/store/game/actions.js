@@ -13,6 +13,7 @@ const actions = {
   SET_OPERATION_CONDITION: 'set_operation_condition',
   SET_OPERATION_ACTION: 'set_operation_action',
   SET_AVAILABLE_COMMANDS: 'set_available_commands',
+  ADD_TIME: 'add_time',
 };
 
 export default actions;
