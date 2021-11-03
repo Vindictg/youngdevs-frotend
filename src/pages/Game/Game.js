@@ -49,11 +49,17 @@ function Game() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { Map: gameLevel, Name: name } = await LevelProvider.getLevel(levelID);
+      const {
+        Map: gameLevel,
+        Name: name,
+        AvailableCommands: availableCommands,
+      } = await LevelProvider.getLevel(levelID);
 
       const gameLevelMapped = JSON.parse(gameLevel);
+      const commandsMapped = JSON.parse(availableCommands);
 
       gameDispatch({ type: gameActions.UPDATE_BOARD, payload: { board: gameLevelMapped } });
+      gameDispatch({ type: gameActions.SET_AVAILABLE_COMMANDS, payload: { commandsMapped } });
       setLevelName(name);
       setLevelLoaded(gameLevelMapped);
     };

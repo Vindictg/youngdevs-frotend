@@ -7,7 +7,7 @@ import actions from '../../store/game/actions';
 
 function CommandSelector() {
   const { gameState, gameDispatch } = useContext(GameContext);
-  const { commandList, operationSelected } = gameState;
+  const { commandList, operationSelected, availableCommands } = gameState;
 
   const addCommand = (command) => {
     if (operationSelected) {
@@ -43,16 +43,25 @@ function CommandSelector() {
     <CommandSelected command={command} removeCommand={removeCommand} commandKey={key} />
   ));
 
-  const getAvailableCommandsList = () => Object.keys(commands).map((command) => (
-    <span
-      aria-hidden="true"
-      onClick={() => { addCommand(commands[command]); }}
-      className="CommandSelector-command-selectable"
-      key={commands[command].id}
-    >
-      {commands[command].display}
-    </span>
-  ));
+  const getAvailableCommandsList = () => {
+    const commandsKeys = Object.keys(commands);
+    const commandsKeysFilter = commandsKeys.filter((commandKey) => availableCommands?.find(
+      (availableCommand) => (
+        availableCommand === commands[commandKey].id
+      ),
+    ) !== undefined);
+
+    return commandsKeysFilter.map((command) => (
+      <span
+        aria-hidden="true"
+        onClick={() => { addCommand(commands[command]); }}
+        className="CommandSelector-command-selectable"
+        key={commands[command]?.id}
+      >
+        {commands[command]?.display}
+      </span>
+    ));
+  };
 
   return (
     <div className="CommandSelector-container">

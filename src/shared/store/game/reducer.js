@@ -19,6 +19,7 @@ export const reducer = (state, action) => {
       return { ...state, board: [...payload.board] };
     case actions.RESET:
       return {
+        ...state,
         ...getInitialGameContext(),
         commandList: state.commandList,
         board: payload.board.map((row) => row.slice()),
@@ -60,6 +61,8 @@ export const reducer = (state, action) => {
       newState.commandList[payload.commandKey].condition = payload.condition;
       return newState;
     }
+    case actions.SET_AVAILABLE_COMMANDS:
+      return { ...state, availableCommands: payload.commandsMapped };
     default:
       throw new Error('action is not defined');
   }

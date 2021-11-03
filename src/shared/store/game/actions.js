@@ -12,6 +12,7 @@ const actions = {
   RESET_OPERATION_SELECTED: 'reset_operation_selected',
   SET_OPERATION_CONDITION: 'set_operation_condition',
   SET_OPERATION_ACTION: 'set_operation_action',
+  SET_AVAILABLE_COMMANDS: 'set_available_commands',
 };
 
 export default actions;
