@@ -68,6 +68,8 @@ export const reducer = (state, action) => {
       return { ...state, time: state.time + 1 };
     case actions.SET_LEVEL_ID:
       return { ...state, levelID: payload.levelID };
+    case actions.LOAD_SAVE:
+      return { ...state, ...payload };
     default:
       throw new Error('action is not defined');
   }

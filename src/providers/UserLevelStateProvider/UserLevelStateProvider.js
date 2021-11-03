@@ -3,7 +3,7 @@ import authHeaderProvider from '../../shared/auth/authHeadersHelper';
 
 import config from '../../config/env';
 
-export const getUserLevelState = async (levelID) => {
+const getUserLevelState = async (levelID) => {
   const getUserLevelStateURL = `${config.apiURL}/level/state/${levelID}`;
   try {
     const result = await axios.get(getUserLevelStateURL,
@@ -16,7 +16,7 @@ export const getUserLevelState = async (levelID) => {
   }
 };
 
-export const updateUserLevelState = async (levelState) => {
+const updateUserLevelState = async (levelState) => {
   const putUserLevelStateURL = `${config.apiURL}/level/state`;
   try {
     const result = await axios.put(putUserLevelStateURL, levelState,

@@ -3,7 +3,7 @@ import './Board.scss';
 import useGameHandler from '../../../hooks/useGameHandler';
 import GameContext from '../../../context/GameContext';
 import actions from '../../store/game/actions';
-import { updateUserLevelState } from '../../../providers/UserLevelStateProvider/UserLevelStateProvider';
+import LevelStateProvider from '../../../providers/UserLevelStateProvider/UserLevelStateProvider';
 
 const movementDelay = 500;
 
@@ -23,7 +23,7 @@ function Board({ initialBoard, handleOpenModal }) {
   };
 
   const saveWinnerInfo = async () => {
-    await updateUserLevelState({
+    await LevelStateProvider.updateUserLevelState({
       LevelID: Number(levelID),
       Time: time,
       UserSolution: JSON.stringify(commandList),

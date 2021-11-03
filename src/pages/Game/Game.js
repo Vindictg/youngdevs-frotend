@@ -18,7 +18,7 @@ import GameContext from '../../context/GameContext';
 import { reducer as consoleReducer, getInitialConsoleContext } from '../../shared/store/console/reducer';
 import ConsoleContext from '../../context/ConsoleContext';
 import LevelProvider from '../../providers/LevelProvider';
-import { updateUserLevelState } from '../../providers/UserLevelStateProvider/UserLevelStateProvider';
+import LevelStateProvider from '../../providers/UserLevelStateProvider/UserLevelStateProvider';
 
 function Game() {
   const { level: levelID } = useParams();
@@ -48,7 +48,7 @@ function Game() {
   };
 
   const saveWinnerInfo = async () => {
-    await updateUserLevelState({
+    await LevelStateProvider.updateUserLevelState({
       LevelID: Number(levelID),
       Time: time,
       UserSolution: JSON.stringify(commandList),
@@ -60,6 +60,14 @@ function Game() {
     routerHistory.push('/');
   };
 
+  const mapDataSaved = (dataSaved) => {
+    const { Time: timeSaved, UserSolution } = dataSaved;
+    return {
+      time: timeSaved,
+      commandList: JSON.parse(UserSolution || '[]'),
+    };
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const {
@@ -68,12 +76,17 @@ function Game() {
         AvailableCommands: availableCommands,
       } = await LevelProvider.getLevel(levelID);
 
+      const dataSaved = await LevelStateProvider.getUserLevelState(levelID);
+
+      const dataSavedMapped = mapDataSaved(dataSaved);
+
       const gameLevelMapped = JSON.parse(gameLevel);
       const commandsMapped = JSON.parse(availableCommands);
 
       gameDispatch({ type: gameActions.UPDATE_BOARD, payload: { board: gameLevelMapped } });
       gameDispatch({ type: gameActions.SET_LEVEL_ID, payload: { levelID } });
       gameDispatch({ type: gameActions.SET_AVAILABLE_COMMANDS, payload: { commandsMapped } });
+      gameDispatch({ type: gameActions.LOAD_SAVE, payload: dataSavedMapped });
       setLevelName(name);
       setLevelLoaded(gameLevelMapped);
     };
