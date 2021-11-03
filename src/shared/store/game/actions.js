@@ -14,6 +14,7 @@ const actions = {
   SET_OPERATION_ACTION: 'set_operation_action',
   SET_AVAILABLE_COMMANDS: 'set_available_commands',
   ADD_TIME: 'add_time',
+  SET_LEVEL_ID: 'set_level_id',
 };
 
 export default actions;

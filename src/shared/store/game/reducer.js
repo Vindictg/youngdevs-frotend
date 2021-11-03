@@ -66,6 +66,8 @@ export const reducer = (state, action) => {
       return { ...state, availableCommands: payload.commandsMapped };
     case actions.ADD_TIME:
       return { ...state, time: state.time + 1 };
+    case actions.SET_LEVEL_ID:
+      return { ...state, levelID: payload.levelID };
     default:
       throw new Error('action is not defined');
   }

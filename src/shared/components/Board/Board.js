@@ -3,6 +3,7 @@ import './Board.scss';
 import useGameHandler from '../../../hooks/useGameHandler';
 import GameContext from '../../../context/GameContext';
 import actions from '../../store/game/actions';
+import { updateUserLevelState } from '../../../providers/UserLevelStateProvider/UserLevelStateProvider';
 
 const movementDelay = 500;
 
@@ -11,7 +12,7 @@ function Board({ initialBoard, handleOpenModal }) {
   const GameHandler = useGameHandler();
 
   const {
-    board, playerPosition, running, nextCommand, commandList,
+    board, playerPosition, running, nextCommand, commandList, time, levelID,
   } = gameState;
 
   const cellInformation = {
@@ -21,10 +22,20 @@ function Board({ initialBoard, handleOpenModal }) {
     3: { className: 'Board-cell-goal' },
   };
 
-  const executeCommand = (movement, currentPosition) => {
+  const saveWinnerInfo = async () => {
+    await updateUserLevelState({
+      LevelID: Number(levelID),
+      Time: time,
+      UserSolution: JSON.stringify(commandList),
+      IsSolved: true,
+    });
+  };
+
+  const executeCommand = async (movement, currentPosition) => {
     const gameStateUpdated = GameHandler.executeCommand(board, movement, currentPosition);
 
     if (gameStateUpdated.winner) {
+      await saveWinnerInfo();
       handleOpenModal();
       gameDispatch({ type: actions.RESET, payload: { board: initialBoard } });
       return { repeatCommand: false, currentPosition };

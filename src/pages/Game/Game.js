@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import './Game.scss';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
@@ -18,6 +18,7 @@ import GameContext from '../../context/GameContext';
 import { reducer as consoleReducer, getInitialConsoleContext } from '../../shared/store/console/reducer';
 import ConsoleContext from '../../context/ConsoleContext';
 import LevelProvider from '../../providers/LevelProvider';
+import { updateUserLevelState } from '../../providers/UserLevelStateProvider/UserLevelStateProvider';
 
 function Game() {
   const { level: levelID } = useParams();
@@ -32,6 +33,8 @@ function Game() {
   const [openModal, setOpenModal] = useState(false);
   const routerHistory = useHistory();
 
+  const { running, time, commandList } = gameState;
+
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -44,7 +47,16 @@ function Game() {
     setOpenModal(false);
   };
 
-  const redirectBackToMenu = () => {
+  const saveWinnerInfo = async () => {
+    await updateUserLevelState({
+      LevelID: Number(levelID),
+      Time: time,
+      UserSolution: JSON.stringify(commandList),
+    });
+  };
+
+  const redirectBackToMenu = async () => {
+    await saveWinnerInfo();
     routerHistory.push('/');
   };
 
@@ -60,6 +72,7 @@ function Game() {
       const commandsMapped = JSON.parse(availableCommands);
 
       gameDispatch({ type: gameActions.UPDATE_BOARD, payload: { board: gameLevelMapped } });
+      gameDispatch({ type: gameActions.SET_LEVEL_ID, payload: { levelID } });
       gameDispatch({ type: gameActions.SET_AVAILABLE_COMMANDS, payload: { commandsMapped } });
       setLevelName(name);
       setLevelLoaded(gameLevelMapped);
@@ -67,8 +80,6 @@ function Game() {
 
     fetchData();
   }, [levelID]);
-
-  const { running } = gameState;
 
   const runOrPauseExecution = () => {
     gameDispatch({ type: gameActions.SWITCH_RUNNING });
@@ -91,7 +102,9 @@ function Game() {
                 <CommandSelector />
               </div>
               <div className="Game-container-footer">
-                <Link className="Game-button" to="/">BACK TO MENU</Link>
+                <Button className="Game-button" variant="contained" color="primary" onClick={redirectBackToMenu}>
+                  BACK TO MENU
+                </Button>
                 <Console />
                 <button className="Game-button" type="button" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</button>
               </div>
