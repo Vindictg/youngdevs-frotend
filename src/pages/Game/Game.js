@@ -18,6 +18,7 @@ import LevelProvider from '../../providers/LevelProvider';
 import LevelStateProvider from '../../providers/UserLevelStateProvider/UserLevelStateProvider';
 import { commands } from '../../shared/models/commands';
 import messages from '../../shared/constants/messages';
+import { cells } from '../../shared/models/cells';
 
 function Game() {
   const { level: levelID } = useParams();
@@ -68,11 +69,36 @@ function Game() {
 
   const mapDataSaved = (dataSaved) => {
     const { Time: timeSaved, UserSolution, IsSolved } = dataSaved;
+    const resetData = {
+      running: false,
+      nextCommand: 0,
+      operationSelected: null,
+    };
+
     return {
       time: timeSaved,
       commandList: JSON.parse(UserSolution || '[]'),
       isSolved: IsSolved,
+      ...resetData,
     };
+  };
+
+  const getPlayerPosition = (board) => {
+    let playerI;
+    let playerJ;
+
+    board.find((row, i) => (
+      row.find((element, j) => {
+        if (element === cells.PLAYER) {
+          playerI = i;
+          playerJ = j;
+          return true;
+        }
+        return false;
+      })
+    ));
+
+    return { i: playerI, j: playerJ };
   };
 
   useEffect(() => {
@@ -91,6 +117,10 @@ function Game() {
       const commandsMapped = JSON.parse(availableCommands);
 
       gameDispatch({ type: gameActions.UPDATE_BOARD, payload: { board: gameLevelMapped } });
+      gameDispatch({
+        type: gameActions.UPDATE_PLAYER_POSITION,
+        payload: { playerPosition: getPlayerPosition(gameLevelMapped) },
+      });
       gameDispatch({ type: gameActions.SET_LEVEL_ID, payload: { levelID } });
       gameDispatch({ type: gameActions.SET_AVAILABLE_COMMANDS, payload: { commandsMapped } });
       gameDispatch({ type: gameActions.LOAD_SAVE, payload: dataSavedMapped });
