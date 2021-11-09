@@ -37,7 +37,6 @@ function Board({ initialBoard, handleOpenModal }) {
     if (gameStateUpdated.winner) {
       await saveWinnerInfo();
       handleOpenModal();
-      gameDispatch({ type: actions.RESET, payload: { board: initialBoard } });
       return { repeatCommand: false, currentPosition };
     }
 

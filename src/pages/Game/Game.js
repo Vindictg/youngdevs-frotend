@@ -40,6 +40,7 @@ function Game() {
   }, []);
 
   const handleOpenModal = () => {
+    gameDispatch({ type: gameActions.SET_TIME_RUNNING, payload: { timeIsRunning: false } });
     setOpenModal(true);
   };
 
@@ -48,6 +49,7 @@ function Game() {
     consoleDispatch({ type: consoleActions.RESET });
 
     routerHistory.push(`/game/${Number(levelID) + 1}`);
+    gameDispatch({ type: gameActions.SET_TIME_RUNNING, payload: { timeIsRunning: true } });
     setOpenModal(false);
   };
 
@@ -65,10 +67,11 @@ function Game() {
   };
 
   const mapDataSaved = (dataSaved) => {
-    const { Time: timeSaved, UserSolution } = dataSaved;
+    const { Time: timeSaved, UserSolution, IsSolved } = dataSaved;
     return {
       time: timeSaved,
       commandList: JSON.parse(UserSolution || '[]'),
+      isSolved: IsSolved,
     };
   };
 
@@ -93,6 +96,10 @@ function Game() {
       gameDispatch({ type: gameActions.LOAD_SAVE, payload: dataSavedMapped });
       setLevelName(name);
       setLevelLoaded(gameLevelMapped);
+
+      if (!dataSavedMapped?.isSolved) {
+        gameDispatch({ type: gameActions.SET_TIME_RUNNING, payload: { timeIsRunning: true } });
+      }
     };
 
     fetchData();

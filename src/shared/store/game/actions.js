@@ -16,6 +16,7 @@ const actions = {
   ADD_TIME: 'add_time',
   SET_LEVEL_ID: 'set_level_id',
   LOAD_SAVE: 'load_save',
+  SET_TIME_RUNNING: 'set_time_running',
 };
 
 export default actions;

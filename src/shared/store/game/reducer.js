@@ -9,7 +9,6 @@ export const getInitialGameContext = () => ({
   nextCommand: 0,
   commandList: [],
   operationSelected: null,
-  time: 0,
 });
 
 export const reducer = (state, action) => {
@@ -70,6 +69,8 @@ export const reducer = (state, action) => {
       return { ...state, levelID: payload.levelID };
     case actions.LOAD_SAVE:
       return { ...state, ...payload };
+    case actions.SET_TIME_RUNNING:
+      return { ...state, timeIsRunning: payload.timeIsRunning };
     default:
       throw new Error('action is not defined');
   }
