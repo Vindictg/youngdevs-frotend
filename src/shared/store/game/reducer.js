@@ -1,15 +1,31 @@
 import actions from './actions';
-
-const initialPlayerPosition = { i: 0, j: 0 };
+import { cells } from '../../models/cells';
 
 export const getInitialGameContext = () => ({
   running: false,
   board: [],
-  playerPosition: initialPlayerPosition,
   nextCommand: 0,
   commandList: [],
   operationSelected: null,
 });
+
+const getPlayerPosition = (board) => {
+  let playerI;
+  let playerJ;
+
+  board.find((row, i) => (
+    row.find((element, j) => {
+      if (element === cells.PLAYER) {
+        playerI = i;
+        playerJ = j;
+        return true;
+      }
+      return false;
+    })
+  ));
+
+  return { i: playerI, j: playerJ };
+};
 
 export const reducer = (state, action) => {
   const { type, payload } = action;
@@ -23,6 +39,7 @@ export const reducer = (state, action) => {
         ...getInitialGameContext(),
         commandList: state.commandList,
         board: payload.board.map((row) => row.slice()),
+        playerPosition: getPlayerPosition(payload.board),
       };
     case actions.RESET_COMMAND_LIST:
       return { ...state, commandList: [] };
@@ -40,7 +57,11 @@ export const reducer = (state, action) => {
         commandList: state.commandList.filter((_value, key) => payload.commandID !== key),
       };
     case actions.UPDATE_BOARD:
-      return { ...state, board: payload.board.map((row) => row.slice()) };
+      return {
+        ...state,
+        board: payload.board.map((row) => row.slice()),
+        playerPosition: getPlayerPosition(payload.board),
+      };
     case actions.UPDATE_OPERATION_SELECTED:
       return { ...state, operationSelected: { ...payload.operationSelected } };
     case actions.RESET_OPERATION_SELECTED:
