@@ -66,7 +66,7 @@ function Board({ initialBoard, handleOpenModal }) {
       });
 
       await commandPromise;
-      const executionData = executeCommand(commandList[nextCommand], currentPosition);
+      const executionData = await executeCommand(commandList[nextCommand], currentPosition);
       if (executionData.repeatCommand) {
         executeFrame(executionData.playerPosition);
       }
