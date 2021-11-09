@@ -10,7 +10,9 @@ function CommandSelector({ command, removeCommand, commandKey }) {
   const { operationSelected } = gameState;
 
   const setAsSelected = (operationItem) => {
-    if (operationSelected?.key !== commandKey) {
+    if (operationSelected?.key === commandKey && operationSelected?.type === operationItem) {
+      gameDispatch({ type: gameActions.RESET_OPERATION_SELECTED });
+    } else {
       gameDispatch({
         type: gameActions.UPDATE_OPERATION_SELECTED,
         payload: {
@@ -20,8 +22,6 @@ function CommandSelector({ command, removeCommand, commandKey }) {
           },
         },
       });
-    } else {
-      gameDispatch({ type: gameActions.RESET_OPERATION_SELECTED });
     }
   };
 
