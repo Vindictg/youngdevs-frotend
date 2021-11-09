@@ -57,7 +57,7 @@ const Nav = () => {
                     'aria-labelledby': 'basic-button',
                   }}
                 >
-                  { user.isAdmin ? <MenuItem onClick={handleAdmin}>Admin</MenuItem> : <></> }
+                  { user.isAdmin ? <MenuItem onClick={handleAdmin}>Admin</MenuItem> : null }
                   <MenuItem onClick={handleLogOut}>Logout</MenuItem>
                 </Menu>
               </div>

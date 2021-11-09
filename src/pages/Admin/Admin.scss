@@ -1,23 +1,23 @@
 @import '../../styles/constants';
 
-.Admin{
-    &-content{
-        width: 900px;
-        color: black;
-        font-weight: 800;
-    }
+.Admin {
+  &-content{
+    width: 900px;
+    color: black;
+    font-weight: 800;
+  }
 
-    &-link-content{
-        display:flex;
-        flex-direction: column;
-    }
-}
-
-.table{
-    width: 100%;
-}
-
-.actions{
+  &-link-content{
     display: flex;
-    justify-content: end;
+    flex-direction: column;
+  }
+}
+
+.table {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
 }

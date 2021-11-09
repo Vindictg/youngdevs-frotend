@@ -11,6 +11,7 @@ function Ranking() {
     const u = await UserProvider.getRanking();
     setUsers(u);
   }, []);
+
   return (
     <div className="App">
       <div className="App-container">
@@ -18,7 +19,7 @@ function Ranking() {
           <Typography variant="h3">RANKING</Typography>
           <div className="Ranking-table Home-link-content">
             { users?.map((u, i) => (
-              <div>
+              <div key={u.ID}>
                 <Typography variant="h6" key={u.ID}>
                   {i + 1}
                   .-

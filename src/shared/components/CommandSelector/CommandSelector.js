@@ -40,7 +40,12 @@ function CommandSelector() {
   };
 
   const getSelectedCommandsList = () => commandList.map((command, key) => (
-    <CommandSelected command={command} removeCommand={removeCommand} commandKey={key} />
+    <CommandSelected
+      command={command}
+      removeCommand={removeCommand}
+      commandKey={key}
+      key={(Math.random() + 1).toString(36).substring(7)}
+    />
   ));
 
   const getAvailableCommandsList = () => {
