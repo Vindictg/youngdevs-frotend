@@ -30,6 +30,7 @@ function Game() {
   const [levelName, setLevelName] = useState('');
   const [levelLoaded, setLevelLoaded] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [score, setScore] = useState(0);
   const routerHistory = useHistory();
 
   const { running, time, commandList } = gameState;
@@ -39,8 +40,8 @@ function Game() {
     if (!lvlState.IsSolved && levelID !== '1') routerHistory.push('/levels');
   }, []);
 
-  const handleOpenModal = () => {
-    gameDispatch({ type: gameActions.SET_TIME_RUNNING, payload: { timeIsRunning: false } });
+  const handleOpenModal = (userScore) => {
+    setScore(userScore);
     setOpenModal(true);
   };
 
@@ -167,6 +168,7 @@ function Game() {
         >
           <div className="Modal-container">
             <span className="Modal-title">LEVEL COMPLETED!</span>
+            <span className="Modal-title">{`SCORE: ${score}`}</span>
             <div className="Modal-buttons-container">
               <Button variant="contained" color="primary" onClick={redirectBackToMenu}>
                 BACK TO MENU

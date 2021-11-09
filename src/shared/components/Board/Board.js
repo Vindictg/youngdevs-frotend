@@ -3,9 +3,10 @@ import './Board.scss';
 import useGameHandler from '../../../hooks/useGameHandler';
 import GameContext from '../../../context/GameContext';
 import actions from '../../store/game/actions';
-import LevelStateProvider from '../../../providers/UserLevelStateProvider/UserLevelStateProvider';
+import LevelProvider from '../../../providers/LevelProvider/LevelProvider';
 
 const movementDelay = 500;
+const timerFail = 1;
 
 function Board({ initialBoard, handleOpenModal }) {
   const { gameState, gameDispatch } = useContext(GameContext);
@@ -23,20 +24,23 @@ function Board({ initialBoard, handleOpenModal }) {
   };
 
   const saveWinnerInfo = async () => {
-    await LevelStateProvider.updateUserLevelState({
+    const userState = {
       LevelID: Number(levelID),
-      Time: time,
+      Time: time + timerFail,
       UserSolution: JSON.stringify(commandList),
-      IsSolved: true,
-    });
+    };
+
+    const levelValidationData = await LevelProvider.validateLevel(userState);
+
+    handleOpenModal(levelValidationData?.Score);
   };
 
   const executeCommand = async (movement, currentPosition) => {
     const gameStateUpdated = GameHandler.executeCommand(board, movement, currentPosition);
 
     if (gameStateUpdated.winner) {
+      gameDispatch({ type: actions.SET_TIME_RUNNING, payload: { timeIsRunning: false } });
       await saveWinnerInfo();
-      handleOpenModal();
       return { repeatCommand: false, currentPosition };
     }
 

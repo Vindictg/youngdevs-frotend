@@ -59,9 +59,25 @@ const getLevelState = async (levelID) => {
   }
 };
 
+const validateLevel = async (levelState) => {
+  const postValidateLevelStateURL = `${config.apiURL}/level/validate`;
+  console.log(postValidateLevelStateURL);
+  try {
+    const result = await axios.post(postValidateLevelStateURL, levelState,
+      {
+        headers: await authHeaderProvider.getAuthHeaders(),
+      });
+    console.log(result);
+    return result.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export default {
   getLevel,
   getAll,
   getAllLevelState,
   getLevelState,
+  validateLevel,
 };
