@@ -6,9 +6,8 @@ import actions from '../../store/game/actions';
 import LevelProvider from '../../../providers/LevelProvider/LevelProvider';
 
 const movementDelay = 500;
-const timerFail = 1;
 
-function Board({ initialBoard, handleOpenModal }) {
+function Board({ initialBoard, handleOpenModal, isSolved = false }) {
   const { gameState, gameDispatch } = useContext(GameContext);
   const GameHandler = useGameHandler();
 
@@ -26,7 +25,7 @@ function Board({ initialBoard, handleOpenModal }) {
   const saveWinnerInfo = async () => {
     const userState = {
       LevelID: Number(levelID),
-      Time: time + timerFail,
+      Time: time,
       UserSolution: JSON.stringify(commandList),
     };
 
@@ -85,7 +84,9 @@ function Board({ initialBoard, handleOpenModal }) {
   }, [running, nextCommand]);
 
   useEffect(() => {
-    gameDispatch({ type: actions.SET_TIME_RUNNING, payload: { timeIsRunning: !running } });
+    if (!isSolved) {
+      gameDispatch({ type: actions.SET_TIME_RUNNING, payload: { timeIsRunning: !running } });
+    }
   }, [running]);
 
   const generateGameBoard = () => {

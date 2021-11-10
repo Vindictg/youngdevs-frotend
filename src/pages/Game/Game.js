@@ -164,7 +164,11 @@ function Game() {
                 <Timer />
               </div>
               <div className="Game-container-content">
-                <Board initialBoard={levelLoaded} handleOpenModal={handleOpenModal} />
+                <Board
+                  initialBoard={levelLoaded}
+                  handleOpenModal={handleOpenModal}
+                  isSolved={isSolved}
+                />
                 <CommandSelector />
               </div>
               <div className="Game-container-footer">
