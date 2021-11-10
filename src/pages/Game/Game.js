@@ -36,9 +36,16 @@ function Game() {
   const { running, time, commandList } = gameState;
 
   useEffect(async () => {
-    const lvlState = await LevelProvider.getLevelState(levelID - 1);
-    if (!lvlState.IsSolved && levelID !== '1') routerHistory.push('/levels');
-  }, []);
+    const firstLevel = 1;
+
+    if (Number(levelID) !== firstLevel) {
+      const lvlState = await LevelProvider.getLevelState(levelID - 1);
+
+      if (!lvlState.IsSolved) {
+        routerHistory.push('/levels');
+      }
+    }
+  }, [levelID]);
 
   const handleOpenModal = (userScore) => {
     setScore(userScore);
@@ -83,11 +90,18 @@ function Game() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const levelFound = await LevelProvider.getLevel(levelID);
+
+      if (!levelFound.ID) {
+        routerHistory.push('/levels');
+        return;
+      }
+
       const {
         Map: gameLevel,
         Name: name,
         AvailableCommands: availableCommands,
-      } = await LevelProvider.getLevel(levelID);
+      } = levelFound;
 
       const dataSaved = await LevelStateProvider.getUserLevelState(levelID);
 
