@@ -15,10 +15,10 @@ import { reducer as consoleReducer, getInitialConsoleContext } from '../../share
 import GameContext from '../../context/GameContext';
 import ConsoleContext from '../../context/ConsoleContext';
 import LevelProvider from '../../providers/LevelProvider';
+import UserProvider from '../../providers/UserProvider';
 import LevelStateProvider from '../../providers/UserLevelStateProvider/UserLevelStateProvider';
 import { commands } from '../../shared/models/commands';
 import messages from '../../shared/constants/messages';
-import useAuth from '../../hooks/useAuth';
 
 function Game() {
   const { level: levelID } = useParams();
@@ -34,7 +34,6 @@ function Game() {
   const [score, setScore] = useState(0);
   const [isSolved, setIsSolved] = useState(false);
   const routerHistory = useHistory();
-  const { user: userAuthenticated } = useAuth();
 
   const { running, time, commandList } = gameState;
 
@@ -97,7 +96,9 @@ function Game() {
     const fetchData = async () => {
       const levelFound = await LevelProvider.getLevel(levelID);
 
-      if (!levelFound.ID || (!userAuthenticated?.isPremium && levelFound?.IsPremium)) {
+      const userFound = await UserProvider.getUserData();
+
+      if (!levelFound.ID || (!userFound?.IsPremium && levelFound?.IsPremium)) {
         routerHistory.push('/levels');
         return;
       }
