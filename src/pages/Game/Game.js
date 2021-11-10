@@ -31,6 +31,7 @@ function Game() {
   const [levelLoaded, setLevelLoaded] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [score, setScore] = useState(0);
+  const [isSolved, setIsSolved] = useState(false);
   const routerHistory = useHistory();
 
   const { running, time, commandList } = gameState;
@@ -59,7 +60,7 @@ function Game() {
     setOpenModal(false);
   };
 
-  const saveWinnerInfo = async () => {
+  const savePlayerInfo = async () => {
     await LevelStateProvider.updateUserLevelState({
       LevelID: Number(levelID),
       Time: time,
@@ -68,7 +69,9 @@ function Game() {
   };
 
   const redirectBackToMenu = async () => {
-    await saveWinnerInfo();
+    if (!isSolved) {
+      await savePlayerInfo();
+    }
     routerHistory.push('/');
   };
 
@@ -106,6 +109,7 @@ function Game() {
       const dataSaved = await LevelStateProvider.getUserLevelState(levelID);
 
       const dataSavedMapped = mapDataSaved(dataSaved);
+      setIsSolved(dataSavedMapped?.isSolved);
 
       const gameLevelMapped = JSON.parse(gameLevel);
       const commandsMapped = JSON.parse(availableCommands);
