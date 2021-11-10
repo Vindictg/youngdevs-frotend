@@ -4,51 +4,49 @@ import emailjs from 'emailjs-com';
 import { Formik } from 'formik';
 import './Support.scss';
 
-export default function Support() {
+export default function Support({
+  email = '',
+  subject = '',
+  message = '',
+}) {
   const form = useRef();
   const YOUR_SERVICE_ID = 'service_hcoa7ij';
   const YOUR_TEMPLATE_ID = 'template_5sca7vc';
   const YOUR_USER_ID = 'user_ijlJo0XGucv2mYoKRhhr4';
-  // eslint-disable-next-line no-unused-vars
+
   const regularExpression = {
     email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     subject: /^[a-zA-ZÀ-ÿ\s]{1,35}$/,
     message: /^[a-zA-ZÀ-ÿ\s]{1,400}$/,
   };
 
-  function validateFields(values) {
-    // eslint-disable-next-line prefer-const
-    let errors = {};
+  const validateFields = (values) => {
+    const errors = {};
 
     if (!values.email) {
-      errors.email = 'Campo obligatorio';
+      errors.email = 'Please enter an email';
     } else if (!regularExpression.email.test(values.email)) {
-      errors.email = 'Por favor ingrese un email valido';
+      errors.email = 'Please enter a valid email';
     }
 
     if (!values.subject) {
-      errors.subject = 'Campo obligatorio';
+      errors.subject = 'Please enter a subject';
     } else if (!regularExpression.subject.test(values.subject)) {
-      errors.subject = 'Por favor ingrese un asunto valido';
+      errors.subject = 'Please enter a valid subject';
     }
 
     if (!values.message) {
-      errors.message = 'Campo obligatorio';
+      errors.message = 'Please enter a message';
     } else if (!regularExpression.message.test(values.message)) {
-      errors.message = 'Por favor ingrese un mensaje valido';
+      errors.message = 'Please enter a valid message';
     }
 
     return errors;
-  }
+  };
 
-  function sendEmail() {
-    emailjs.sendForm(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, form.current, YOUR_USER_ID)
-      .then((result) => {
-        console.log(result.text);
-      }, (error) => {
-        console.log(error.text);
-      });
-  }
+  const sendEmail = async () => {
+    await emailjs.sendForm(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, form.current, YOUR_USER_ID);
+  };
 
   return (
     <div className="App">
@@ -56,18 +54,16 @@ export default function Support() {
         <h1 className="Support-title">Support</h1>
         <Formik
           initialValues={{
-            email: '',
-            subject: '',
-            message: '',
+            email,
+            subject,
+            message,
           }}
           validate={(values) => {
-            // eslint-disable-next-line prefer-const
-            let errors = validateFields(values);
+            const errors = validateFields(values);
 
             return errors;
           }}
-          onSubmit={(values, { resetForm }) => {
-            console.log(values);
+          onSubmit={(_, { resetForm }) => {
             sendEmail();
             resetForm();
           }}
