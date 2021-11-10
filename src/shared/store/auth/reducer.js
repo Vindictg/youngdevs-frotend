@@ -12,6 +12,7 @@ export const getInitialState = (userAuthenticated) => ({
   isLocked: !!userAuthenticated?.isLocked,
   id: userAuthenticated?.id,
   score: userAuthenticated?.score,
+  currentLevel: userAuthenticated?.currentLevel,
 });
 
 export const reducer = (state, action) => {
