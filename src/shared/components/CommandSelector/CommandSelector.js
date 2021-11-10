@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './CommandSelector.scss';
 import GameContext from '../../../context/GameContext';
 import CommandSelected from '../CommandSelected';
@@ -6,8 +6,15 @@ import { commands, commandTypes, operationItems } from '../../models/commands';
 import actions from '../../store/game/actions';
 
 function CommandSelector() {
+  let selectorEnd = null;
   const { gameState, gameDispatch } = useContext(GameContext);
   const { commandList, operationSelected, availableCommands } = gameState;
+
+  const scrollToBottom = () => {
+    selectorEnd.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => { scrollToBottom(); }, [commandList]);
 
   const addCommand = (command) => {
     if (operationSelected) {
@@ -75,6 +82,10 @@ function CommandSelector() {
       </div>
       <div className="CommandSelector-column">
         {getSelectedCommandsList()}
+        <span
+          className="Console-end"
+          ref={(selectorEndRef) => { selectorEnd = selectorEndRef; }}
+        />
       </div>
     </div>
   );
