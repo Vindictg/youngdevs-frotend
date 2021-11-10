@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import emailjs from 'emailjs-com';
 import { Formik } from 'formik';
 import './Support.scss';
+import useAuth from '../../hooks/useAuth';
 
 export default function Support({
   email = '',
   subject = '',
   message = '',
 }) {
+  const { user } = useAuth();
+
   const form = useRef();
   const YOUR_SERVICE_ID = 'service_hcoa7ij';
   const YOUR_TEMPLATE_ID = 'template_5sca7vc';
@@ -54,7 +57,7 @@ export default function Support({
         <h1 className="Support-title">Support</h1>
         <Formik
           initialValues={{
-            email,
+            email: email || user.email,
             subject,
             message,
           }}

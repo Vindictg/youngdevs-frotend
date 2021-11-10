@@ -4,7 +4,6 @@ import { BrowserRouter, Switch } from 'react-router-dom';
 import Game from './Game';
 import Home from './Home';
 import Login from './Login';
-import Premium from './Premium';
 import Ranking from './Ranking';
 import Admin from './Admin';
 import Support from './Support';
@@ -14,6 +13,7 @@ import GuardedLoginRoute from '../shared/auth/guardedLoginRoute';
 import GuardedAdminRoute from '../shared/auth/guardedAdminRoute';
 import useAuth from '../hooks/useAuth';
 import Level from './Level';
+import subjects from '../shared/constants/subjects';
 
 const Router = () => {
   const { authLoading } = useAuth();
@@ -26,7 +26,7 @@ const Router = () => {
           <Switch>
             <GuardedLoginRoute exact path="/login" component={Login} />
             <GuardedRoute exact path="/game/:level" component={Game} />
-            <GuardedRoute exact path="/premium" component={Premium} />
+            <GuardedRoute exact path="/premium" component={() => <Support subject={subjects.premiumSubject} />} />
             <GuardedRoute exact path="/ranking" component={Ranking} />
             <GuardedRoute exact path="/support" component={Support} />
             <GuardedAdminRoute exact path="/admin" component={Admin} />
