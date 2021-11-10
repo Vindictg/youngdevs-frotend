@@ -73,7 +73,7 @@ function Board({ initialBoard, handleOpenModal }) {
       if (executionData.repeatCommand) {
         executeFrame(executionData.playerPosition);
       }
-    } else if (nextCommand === commandList.length) {
+    } else if (nextCommand === commandList.length && running) {
       setTimeout(() => {
         gameDispatch({ type: actions.RESET, payload: { board: initialBoard } });
       }, movementDelay * 2);

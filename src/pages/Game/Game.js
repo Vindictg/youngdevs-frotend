@@ -47,10 +47,8 @@ function Game() {
 
   const changeToNextLevel = () => {
     gameDispatch({ type: gameActions.RESET_COMMAND_LIST });
-    consoleDispatch({ type: consoleActions.RESET });
 
     routerHistory.push(`/game/${Number(levelID) + 1}`);
-    gameDispatch({ type: gameActions.SET_TIME_RUNNING, payload: { timeIsRunning: true } });
     setOpenModal(false);
   };
 
