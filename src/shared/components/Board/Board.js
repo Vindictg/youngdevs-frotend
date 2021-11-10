@@ -84,6 +84,10 @@ function Board({ initialBoard, handleOpenModal }) {
     executeFrame();
   }, [running, nextCommand]);
 
+  useEffect(() => {
+    gameDispatch({ type: actions.SET_TIME_RUNNING, payload: { timeIsRunning: !running } });
+  }, [running]);
+
   const generateGameBoard = () => {
     let generatedGameBoard = [];
 

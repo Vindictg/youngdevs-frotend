@@ -18,6 +18,7 @@ import LevelProvider from '../../providers/LevelProvider';
 import LevelStateProvider from '../../providers/UserLevelStateProvider/UserLevelStateProvider';
 import { commands } from '../../shared/models/commands';
 import messages from '../../shared/constants/messages';
+import useAuth from '../../hooks/useAuth';
 
 function Game() {
   const { level: levelID } = useParams();
@@ -33,6 +34,7 @@ function Game() {
   const [score, setScore] = useState(0);
   const [isSolved, setIsSolved] = useState(false);
   const routerHistory = useHistory();
+  const { user: userAuthenticated } = useAuth();
 
   const { running, time, commandList } = gameState;
 
@@ -95,7 +97,7 @@ function Game() {
     const fetchData = async () => {
       const levelFound = await LevelProvider.getLevel(levelID);
 
-      if (!levelFound.ID) {
+      if (!levelFound.ID || (!userAuthenticated?.isPremium && levelFound?.IsPremium)) {
         routerHistory.push('/levels');
         return;
       }
