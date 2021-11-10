@@ -30,6 +30,7 @@ export const reducer = (state, action) => {
         isLocked: payload.isLocked,
         id: payload.id,
         score: payload.score,
+        currentLevel: payload.currentLevel,
       };
     case actions.logOut:
       return { ...state, isAuthenticated: false };

@@ -14,13 +14,17 @@ function Home() {
               SCORE:
               {user?.score}
             </Typography>
-            <Typography variant="h5">CURRENT LEVEL: 1</Typography>
+            <Typography variant="h5">
+              CURRENT LEVEL:
+              {' '}
+              {user?.currentLevel}
+            </Typography>
             <br />
             <div className="Home-link-content">
               <Button disabled={user.isLocked} variant="contained" className="App-link" href="/game/1">PLAY</Button>
               <Button disabled={user.isLocked} variant="contained" className="App-link" href="/levels">LEVELS</Button>
               <Button disabled={user.isLocked} variant="contained" className="App-link" href="/ranking">RANKING</Button>
-              <Button disabled={user.isLocked} variant="contained" className="App-link" href="/premium">¡PREMIUM!</Button>
+              <Button disabled={user.isLocked || user.isPremium} variant="contained" className="App-link" href="/premium">¡PREMIUM!</Button>
               <Button variant="contained" className="App-link" href="/support">SUPPORT</Button>
             </div>
           </div>

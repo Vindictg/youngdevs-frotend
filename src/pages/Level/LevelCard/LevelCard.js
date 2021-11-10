@@ -19,6 +19,9 @@ function LevelCard(props) {
 
   const isAvaible = () => {
     if (level.Level !== 1) {
+      if (level.IsPremium && !user.isPremium) {
+        return false;
+      }
       return preLvlState?.IsSolved;
     }
     return true;

@@ -36,6 +36,7 @@ function useAuth() {
         userPayload.isLocked = !!ur.IsLocked;
         userPayload.id = ur.ID;
         userPayload.score = ur.Score;
+        userPayload.currentLevel = ur.CurrentLevel;
       }
 
       dispatch({ type: actions.loadUserProfile, payload: userPayload });
@@ -60,6 +61,7 @@ function useAuth() {
           isLocked: !!ur.IsLocked,
           id: ur.ID,
           score: ur.Score,
+          currentLevel: ur.CurrentLevel,
         };
         dispatch({ type: actions.loadUserProfile, payload: userPayload });
         history.push('/');
