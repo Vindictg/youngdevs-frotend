@@ -1,17 +1,8 @@
 @import '../../styles/constants';
 
-.Login{
-    &-content{
-        color: black;
-    }
-
-    &-link{
-        color: #282c34;
-        background-color: #fff;
-        text-decoration: none;
-        font-size: 20px;
-        padding: 16px 56px;
-        font-weight: 700;
+.Login {
+    &-title {
+        font-weight: 600!important;
     }
 }
 

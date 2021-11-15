@@ -10,15 +10,14 @@ function Home() {
       <div className="App">
         <div className="App-container">
           <div className="Home-content">
-            <Typography variant="h5">
-              SCORE:
-              {user?.score}
-            </Typography>
-            <Typography variant="h5">
-              CURRENT LEVEL:
-              {' '}
-              {user?.currentLevel}
-            </Typography>
+            <div className="Home-data">
+              <div className="Home-data__label">SCORE</div>
+              <div className="Home-data__data">{user?.score}</div>
+            </div>
+            <div className="Home-data">
+              <div className="Home-data__label">CURRENT LEVEL</div>
+              <div className="Home-data__data">{user?.currentLevel}</div>
+            </div>
             <br />
             <div className="Home-link-content">
               <Button disabled={user.isLocked} variant="contained" className="App-link" href={`/game/${user?.currentLevel}`}>PLAY</Button>

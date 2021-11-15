@@ -153,34 +153,30 @@ function Game() {
   };
 
   return (
-    levelLoaded.length !== 0
+    <div className="App-container">
+      <header className="Container">
+        {levelLoaded.length !== 0
     && (
     <ConsoleContext.Provider value={{ consoleState, consoleDispatch }}>
       <GameContext.Provider value={{ gameState, gameDispatch }}>
-        <div className="App">
-          <header className="App-container">
-            <div className="Game-container">
-              <div className="Game-container-header">
-                <span className="Game-container-header-title">{levelName}</span>
-                <Timer />
-              </div>
-              <div className="Game-container-content">
-                <Board
-                  initialBoard={levelLoaded}
-                  handleOpenModal={handleOpenModal}
-                  isSolved={isSolved}
-                />
-                <CommandSelector />
-              </div>
-              <div className="Game-container-footer">
-                <Button className="Game-button" variant="contained" color="primary" onClick={redirectBackToMenu}>
-                  BACK TO MENU
-                </Button>
-                <Console />
-                <button className="Game-button" type="button" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</button>
-              </div>
-            </div>
-          </header>
+        <div className="Game-container">
+          <div className="Game-container-header">
+            <span className="Game-container-header-title">{levelName}</span>
+            <Timer />
+          </div>
+          <div className="Game-container-content">
+            <Board
+              initialBoard={levelLoaded}
+              handleOpenModal={handleOpenModal}
+              isSolved={isSolved}
+            />
+            <CommandSelector />
+          </div>
+          <div className="Game-container-footer">
+            <Button className="App-link Game-button" variant="contained" onClick={redirectBackToMenu}>BACK TO MENU</Button>
+            <Console />
+            <Button className="App-link Game-button" variant="contained" onClick={runOrPauseExecution}>{ running ? 'PAUSE' : 'RUN' }</Button>
+          </div>
         </div>
         <Modal
           open={openModal}
@@ -191,12 +187,12 @@ function Game() {
         >
           <div className="Modal-container">
             <span className="Modal-title">LEVEL COMPLETED!</span>
-            <span className="Modal-title">{`SCORE: ${score}`}</span>
+            <span className="Modal-title">{`${score} is your score!`}</span>
             <div className="Modal-buttons-container">
-              <Button variant="contained" color="primary" onClick={redirectBackToMenu}>
+              <Button className="App-link" variant="contained" onClick={redirectBackToMenu}>
                 BACK TO MENU
               </Button>
-              <Button variant="contained" color="primary" onClick={changeToNextLevel}>
+              <Button className="App-link" variant="contained" onClick={changeToNextLevel}>
                 NEXT LEVEL
               </Button>
             </div>
@@ -204,7 +200,10 @@ function Game() {
         </Modal>
       </GameContext.Provider>
     </ConsoleContext.Provider>
-    )
+    )}
+      </header>
+    </div>
+
   );
 }
 

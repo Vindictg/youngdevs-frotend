@@ -12,11 +12,19 @@
     flex-direction: column;
     padding: 0.5rem;
     margin: 0 0 0 0.5rem;
-    background-color: #bdbdbd;
-    min-width: 6.3rem;
-    height: (($cell-size + ($cell-margin * 2))  * 9) + 3rem;
+    min-width: 7rem;
+    height: (($cell-size + ($cell-margin * 2))  * 9) + 5rem;
     overflow-y: scroll;
     scroll-snap-type: y proximity;
+    border: rgb(255, 255, 255, 0.5) 3px solid;
+    border-radius: 6px;
+    background-color: rgb(255, 255, 255, 0.2);
+
+    &-title {
+      color: white;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+    }
   }
 
   &-command {
@@ -24,7 +32,7 @@
     font-weight: 800;
     padding: 0.2rem 0.5rem;
     color: #212121;
-    background-color: #e0e0e0;
+    background-color: #ede7f6;
     margin-bottom: 0.4rem;
     border-radius: 4px;
     min-height: 0.8rem;
@@ -33,6 +41,7 @@
     -khtml-user-select: none;
     -webkit-user-select: none;
     -o-user-select: none;
+    min-height: 1.2rem;
   }
 
   &-command-selectable {
@@ -57,10 +66,13 @@
       background-color: #ffffff;
       margin: 0.2rem 0 0.2rem 0;
       margin-left: 0.3rem;
+      min-height: 1rem;
 
       &--focus {
         @extend .CommandSelector-operation-selectable-child;
         border: solid 1px #000;
+        max-height: 1rem;
+        line-height: 0.6rem;
       }
     }
   }

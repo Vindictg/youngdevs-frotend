@@ -2,13 +2,35 @@
 
 .Ranking {
     &-content{
-        color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     &-table{
         padding: 20px;
-        height: 250px;
-        border-style: solid;
-        border-width: thin;
+        border: rgb(255, 255, 255, 0.5) 3px solid;
+        border-radius: 6px;
+        background-color: rgb(255, 255, 255, 0.2);
+        color: white;
+        min-width: 500px;
+        margin-bottom: 1.2rem;
+        font-weight: 800;
+        display: flex;
+    }
+}
+
+.UserRanking {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+
+    &__space {
+        width: -webkit-fill-available;
+    }
+
+    &__number {
+        margin-right: 0.4rem;
     }
 }

@@ -5,12 +5,14 @@
   height: $board-size;
   display: inline-block;
   font-size: 0rem;
-  background-color: $gray-light;
+  background-color: white;
+  border-radius: 6px;
 
   &-cell {
     width: $cell-size;
     height: $cell-size;
     margin: $cell-margin;
+    border-radius: 6px;
 
     &-empty {
       @extend .Board-cell;
@@ -45,4 +47,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: rgb(255, 255, 255, 0.5) 3px solid;
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255, 0.2);
 }
