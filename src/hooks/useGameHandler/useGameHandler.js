@@ -43,17 +43,19 @@ function useGameHandler() {
 
     if (checkEdges(playerPosition, operation, newBoard)) {
       consoleDispatch({ type: consoleActions.WRITE_WARNING, payload: { text: errorMessage } });
-      return { board: newBoard, playerPosition };
+      return { board: newBoard, playerPosition, moved: false };
     }
 
     if (newBoard[playerPosition.i + operation.i][playerPosition.j + operation.j] === cells.WALL) {
       consoleDispatch({ type: consoleActions.WRITE_WARNING, payload: { text: errorMessage } });
-      return { board: newBoard, playerPosition };
+      return { board: newBoard, playerPosition, moved: false };
     }
 
     if (newBoard[playerPosition.i + operation.i][playerPosition.j + operation.j] === cells.GOAL) {
       consoleDispatch({ type: consoleActions.WRITE_SUCCESS, payload: { text: goalMessage } });
-      return { board: newBoard, playerPosition, winner: true };
+      return {
+        board: newBoard, playerPosition, winner: true, moved: true,
+      };
     }
 
     newBoard[playerPosition.i + operation.i][playerPosition.j + operation.j] = cells.PLAYER;
@@ -64,6 +66,7 @@ function useGameHandler() {
     return {
       board: newBoard,
       playerPosition: { i: playerPosition.i + operation.i, j: playerPosition.j + operation.j },
+      moved: true,
     };
   };
 
@@ -95,7 +98,7 @@ function useGameHandler() {
   const executeWhileDo = (board, command, playerPosition) => {
     let ifDoResult = executeIfDo(board, command, playerPosition);
 
-    if (!ifDoResult?.failed) {
+    if (!ifDoResult?.failed && ifDoResult?.moved) {
       ifDoResult = { ...ifDoResult, repeatCommand: true };
     }
 
