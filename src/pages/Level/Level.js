@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Level.scss';
 import {
-  Container, Box, Button, Typography,
+  Box, Button, Typography,
 } from '@material-ui/core';
 import LevelCard from './LevelCard';
 import LevelProvider from '../../providers/LevelProvider';
@@ -11,7 +11,6 @@ function Level() {
   const [levelStates, setLevelState] = useState([]);
 
   useEffect(async () => {
-    // eslint-disable-next-line max-len
     const lvls = await LevelProvider.getAll();
     const lvlState = await LevelProvider.getAllLevelState();
     setLevels(lvls);
@@ -19,22 +18,22 @@ function Level() {
   }, []);
 
   return (
-    <Container className="App-container Level-content">
-      <Typography variant="h5">Select a Level</Typography>
-      <Box className="Level-card-container">
-        { levels?.map((l) => (
-          // eslint-disable-next-line max-len
-          <LevelCard
-            key={l.ID}
-            level={l}
-            lvlState={levelStates?.find((ls) => ls.LevelID === l.Level)}
-            preLvlState={levelStates?.find((ls) => ls.LevelID === l.Level - 1)}
-          />
-        ))}
-      </Box>
-      <br />
-      <Button variant="contained" className="App-link" href="/">BACK TO MENU!</Button>
-    </Container>
+    <div className="App-container">
+      <div className="Container">
+        <Typography className="Generic-title" variant="h5">Select a Level</Typography>
+        <Box className="Level-card-container">
+          { levels?.map((l) => (
+            <LevelCard
+              key={l.ID}
+              level={l}
+              lvlState={levelStates?.find((ls) => ls.LevelID === l.Level)}
+              preLvlState={levelStates?.find((ls) => ls.LevelID === l.Level - 1)}
+            />
+          ))}
+        </Box>
+        <Button variant="contained" className="App-link" href="/">BACK TO MENU</Button>
+      </div>
+    </div>
   );
 }
 

@@ -15,5 +15,21 @@
         color:red;
         padding:20px;
     }
+
+    &-data {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.4rem;
+        color: white;
+        border: rgb(255, 255, 255, 0.5) 3px solid;
+        border-radius: 6px;
+        margin-bottom: 0.5rem;
+        min-width: 11rem;
+
+        &__data {
+            color: white;
+        }
+    }
 }
 

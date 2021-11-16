@@ -21,7 +21,7 @@
     }
 
     &-message-error{
-        color: red;
+        color: #f06292;
         font-size: 0.7rem;
         text-align: left;
         padding: 0;
@@ -29,15 +29,7 @@
     }
 
     &-link{
-        color: #282c34;
-        background-color: #fff;
-        border-style: solid;
-        border-width: 1px;
-        text-decoration: none;
-        font-size: 20px;
-        padding: 12px 56px;
-        font-weight: 700;
-        margin: 1em
+        display: none;
     }
 
     &-link-back{
@@ -57,8 +49,10 @@
         box-sizing: border-box;
     }
 
-    &-buttons{
-        margin: 2em;
+    &-buttons {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
-
 }

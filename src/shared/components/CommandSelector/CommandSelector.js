@@ -78,9 +78,11 @@ function CommandSelector() {
   return (
     <div className="CommandSelector-container">
       <div className="CommandSelector-column">
+        <span className="CommandSelector-column-title">OPERATIONS</span>
         {getAvailableCommandsList()}
       </div>
       <div className="CommandSelector-column">
+        <span className="CommandSelector-column-title">CODE</span>
         {getSelectedCommandsList()}
         <span
           className="Console-end"

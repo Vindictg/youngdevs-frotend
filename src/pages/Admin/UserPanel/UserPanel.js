@@ -27,7 +27,7 @@ function UserPanel() {
 
   return (
     <Box>
-      <Typography variant="h4" component="h4">User Panel</Typography>
+      <Typography variant="h4" className="Generic-title" component="h4">User Panel</Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

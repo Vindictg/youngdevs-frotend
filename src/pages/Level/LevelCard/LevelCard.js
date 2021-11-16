@@ -1,16 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './LevelCard.scss';
-import {
-  Card, Box, Button, Typography,
-} from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import useAuth from '../../../hooks/useAuth';
 
 function LevelCard(props) {
   const { user } = useAuth();
-  const {
-    level, lvlState, preLvlState,
-  } = props;
+  const { level, lvlState, preLvlState } = props;
   const history = useHistory();
 
   const handleClick = () => {
@@ -28,27 +24,28 @@ function LevelCard(props) {
   };
 
   return (
-    <Button onClick={handleClick} disabled={!isAvaible()}>
-      <Card>
-        <Box className={`LevelCard-container ${!isAvaible() ? 'LevelCard-locked' : ''}`}>
-          { level.IsPremium && !user.isPremium ? <Typography className="overlap" variant="subtitle2">Premium</Typography> : <></>}
-          <Typography>
-            LEVEL
-            {' '}
-            {level.Level}
+    <Button className="LevelCard-button" onClick={handleClick} disabled={!isAvaible()}>
+      <div
+        className={`LevelCard-container ${
+          !isAvaible() ? 'LevelCard-locked' : ''
+        }`}
+      >
+        {level.IsPremium && !user.isPremium ? (
+          <Typography className="overlap" variant="subtitle2">
+            Premium
           </Typography>
-        </Box>
-        {
-        lvlState?.Score && lvlState?.Score !== 0 ? (
-          <Typography variant="subtitle2">
-            Score:
-            {' '}
-            {lvlState?.Score}
+        ) : (
+          <></>
+        )}
+        <Typography className="LevelCard-text">{`LEVEL ${level.Level}`}</Typography>
+        {lvlState?.Score && lvlState?.Score !== 0 ? (
+          <Typography className="LevelCard-text" variant="subtitle2">
+            {`Score ${lvlState?.Score}`}
           </Typography>
-        )
-          : <></>
-      }
-      </Card>
+        ) : (
+          <></>
+        )}
+      </div>
     </Button>
   );
 }

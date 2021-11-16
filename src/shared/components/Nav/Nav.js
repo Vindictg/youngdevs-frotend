@@ -33,36 +33,38 @@ const Nav = () => {
   return (
     <div className="App">
       <div className="Nav-header">
-        <div className="Nav-content">
-          <Link className="Nav-link" to="/">YoungDevs</Link>
-          { user.isAuthenticated
-            ? (
-              <div className="Nav-content">
-                <Button
-                  className="avatar"
-                  id="basic-button"
-                  aria-controls="basic-menu"
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClick}
-                >
-                  <Avatar alt="Remy Sharp" sx={{ width: 105, height: 105 }} src={user.avatar} />
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                  }}
-                >
-                  { user.isAdmin ? <MenuItem onClick={handleAdmin}>Admin</MenuItem> : null }
-                  <MenuItem onClick={handleLogOut}>Logout</MenuItem>
-                </Menu>
-              </div>
-            )
-            : <></> }
+        <div className="Container">
+          <div className="Nav-content">
+            <Link className="Nav-link" to="/">YoungDevs</Link>
+            { user.isAuthenticated
+              ? (
+                <div className="Nav-content">
+                  <Button
+                    className="avatar"
+                    id="basic-button"
+                    aria-controls="basic-menu"
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                  >
+                    <Avatar alt="Remy Sharp" sx={{ width: 105, height: 105 }} src={user.avatar} />
+                  </Button>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                    }}
+                  >
+                    { user.isAdmin ? <MenuItem onClick={handleAdmin}>Admin</MenuItem> : null }
+                    <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                  </Menu>
+                </div>
+              )
+              : <></> }
+          </div>
         </div>
       </div>
     </div>

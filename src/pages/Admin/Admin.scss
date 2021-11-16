@@ -1,12 +1,6 @@
 @import '../../styles/constants';
 
 .Admin {
-  &-content{
-    width: 900px;
-    color: black;
-    font-weight: 800;
-  }
-
   &-link-content{
     display: flex;
     flex-direction: column;

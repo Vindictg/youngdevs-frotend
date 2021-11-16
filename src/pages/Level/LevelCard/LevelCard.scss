@@ -1,25 +1,35 @@
 @import '../../../styles/constants';
 
 .LevelCard{
-    &-container{
-        min-width: 100px;
-        min-height: 100px;
-        border-radius: 20px!important;
+    &-container {
+        min-width: 8rem;
+        min-height: 5rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        border-style: solid;
-        border-width: 1px;
+        color: white;
+        border: rgb(255, 255, 255, 0.5) 3px solid;
+        border-radius: 10px;
     }
     &-locked{
         background-color: lightgray!important;
     }
+
+    &-button {
+        padding: 0!important;
+        margin-right: 1rem!important;
+        border-radius: 10px!important;
+    }
+
+    &-text {
+        font-weight: 800!important;
+    }
 }
 
 .overlap{
-    position:absolute;
-    width: 100px;
+    position: absolute;
+    width: 7.8rem;
     background-color:white;
-    border-style: solid;
-    border-width: 1px;
+    color: rgba(74,20,140,1);
+    font-weight: 800!important;
 }

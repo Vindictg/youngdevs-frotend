@@ -6,7 +6,7 @@ function Admin() {
   return (
     <div className="App">
       <div className="App-container">
-        <div className="Admin-content">
+        <div className="Container">
           <UserPanel />
         </div>
       </div>

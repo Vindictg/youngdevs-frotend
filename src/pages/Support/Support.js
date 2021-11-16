@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import emailjs from 'emailjs-com';
 import { Formik } from 'formik';
 import './Support.scss';
@@ -13,6 +13,7 @@ export default function Support({
   const { user } = useAuth();
 
   const form = useRef();
+  const sendButton = useRef(null);
   const YOUR_SERVICE_ID = 'service_hcoa7ij';
   const YOUR_TEMPLATE_ID = 'template_5sca7vc';
   const YOUR_USER_ID = 'user_ijlJo0XGucv2mYoKRhhr4';
@@ -51,10 +52,14 @@ export default function Support({
     await emailjs.sendForm(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, form.current, YOUR_USER_ID);
   };
 
+  const handleSendButton = () => {
+    sendButton.current.click();
+  };
+
   return (
-    <div className="App">
-      <div className="App-header Support-content">
-        <h1 className="Support-title">Support</h1>
+    <div className="App-container">
+      <div className="Container">
+        <h1 className="Generic-title">Support</h1>
         <Formik
           initialValues={{
             email: email || user.email,
@@ -114,10 +119,9 @@ export default function Support({
                   {touched.message && errors.message && <p className="Support-message-error">{errors.message}</p>}
                 </div>
                 <div className="Support-buttons">
-                  <button type="button" className="Support-link">
-                    <Link to="/" className="Support-link-back">BACK TO MENU</Link>
-                  </button>
-                  <input type="submit" className="Support-link" value="SEND" />
+                  <Button variant="contained" className="App-link" href="/">BACK TO MENU</Button>
+                  <Button variant="contained" className="App-link" onClick={handleSendButton}>SEND</Button>
+                  <input ref={sendButton} type="submit" className="Support-link" value="SEND" />
                 </div>
               </form>
             )
